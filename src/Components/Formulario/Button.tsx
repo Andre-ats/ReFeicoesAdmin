@@ -17,7 +17,7 @@ export function Button(props : IButton){
                     id="btn_cadastrarConsumidorPremiado"
                     style={{cursor:"pointer", borderRadius:"8px"}}
                     type="submit" 
-                    className={`text-black font-semibold w-96 h-[41px] bg-redButton disabled:opacity-60 rounded `} 
+                    className={`text-black font-semibold w-full h-[41px] bg-redButton disabled:opacity-60 rounded `} 
                     value={props.label}
                     onClick={props.acao}
                     //disabled={loadingValidation || props.botaoEnvioBool}

@@ -5,8 +5,11 @@ import { Button } from "../../Components/Formulario/Button";
 import { PostLoginAdmin } from "../../Api/LoginAPI/PostLoginAdmin";
 import { Spinner } from "../../Components/Spinner/Spinner";
 import { loginSchema } from "./SchemaLogin/SchemaLogin";
+import { useNavigate } from "react-router-dom";
 
 export function PageLogin() {
+
+    const navigate = useNavigate()
 
     const [dadosLogin, setDadosLogin] = useState<any>([])
     const [spinner, setSpinner] = useState(false)
@@ -41,6 +44,10 @@ export function PageLogin() {
         setSpinner(true)
         const responseData = await PostLoginAdmin(result.data)
         setSpinner(false)
+
+        if(responseData != false){
+            navigate("/admin/dashboard")
+        }
 
         localStorage.setItem('token', responseData);
     }
