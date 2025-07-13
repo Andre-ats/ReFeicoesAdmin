@@ -156,7 +156,7 @@ export function FormularioComponent(props: InputForms) {
 
             {/* mensagem de erro campo-a-campo */}
             {props.erro?.[idx] === false && (
-              <p className="font-semibold text-xs text-red-600 ml-2">
+              <p className="font-semibold text-xs text-red-600 ml-2 w-full break-words mt-2">
                 {props.descricaoErro?.[idx]}
               </p>
             )}

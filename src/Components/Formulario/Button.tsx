@@ -12,7 +12,7 @@ export function Button(props : IButton){
 
     return(
         <Fragment>
-            <div style={{marginTop:"20px", display:"flex", justifyContent:`${props.ladoBotao ? props.ladoBotao : "end"}`, backgroundColor:props.cor}} className="relative">
+            <div style={{marginTop:"20px", display:"flex", justifyContent:`${props.ladoBotao ? props.ladoBotao : "end"}`, backgroundColor:props.cor}} className="relative rounded-md">
                 <input 
                     id="btn_cadastrarConsumidorPremiado"
                     style={{cursor:"pointer", borderRadius:"8px"}}
