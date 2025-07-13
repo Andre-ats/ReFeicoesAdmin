@@ -17,7 +17,12 @@ export function PageDashboard(){
 
     return(
         <Fragment>
-            <LayoutAdmin header>
+            <LayoutAdmin 
+                header
+                atalhosHeader={["Dashboard", "Itens", "Pedidos"]}
+                infoPagina
+                infoPaginaTexto="Este dashboard mostra o total de usuários registrados, pagamentos aprovados e o montante gerado."
+            >
             </LayoutAdmin>
         </Fragment>
     )
