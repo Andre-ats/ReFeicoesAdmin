@@ -49,7 +49,7 @@ export function PageLogin() {
         <Fragment>
             <div className="w-full h-svh bg-gray-200">
                 <div className="w-full h-full flex justify-center items-center">
-                    <div className="bg-gray-400 rounded-lg py-5 max-w-lg w-full w-5/6 shadow-2xl bg-opacity-30 border border-gray-400">
+                    <div className="bg-gray-400 rounded-lg py-5 max-w-lg sm:w-full w-5/6 shadow-2xl bg-opacity-30 border border-gray-400">
                         <div className="w-full h-full flex justify-center items-center">
                             <div className="w-full px-4">
                                 <form className="w-full" action="" onSubmit={(e) => handleLogin(e)}>
