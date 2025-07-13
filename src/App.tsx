@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PageLogin } from './Pages/PageLogin/PageLogin';
 import { PageDashboard } from './Pages/PageDashboard/PageDashboard';
+import { ListagemItens } from './Pages/PageItens/ListagemItens/ListagemItens';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<PageLogin />} />
           <Route path="/admin/dashboard" element={<PageDashboard />} />
+          <Route path="/admin/itens/listagem" element={<ListagemItens />} />
         </Routes>
       </Fragment>
     </Router>
