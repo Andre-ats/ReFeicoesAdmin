@@ -1,23 +1,23 @@
-# Passo 1: Use uma imagem base com Node.js
+# Use uma imagem base com Node.js
 FROM node:16-alpine
 
-# Passo 2: Defina o diretório de trabalho no container
+# Define o diretório de trabalho
 WORKDIR /app
 
-# Passo 3: Copie o package.json e package-lock.json
+# Copie os arquivos de dependência (package.json e package-lock.json)
 COPY package*.json ./
 
-# Passo 4: Instale as dependências
+# Instale as dependências
 RUN npm install
 
-# Passo 5: Copie o restante do código para o container
+# Copie o restante do código para o container
 COPY . .
 
-# Passo 6: Exponha a porta que o Vite usa (5173 por padrão)
+# Exponha a porta do Vite (5173 é a porta padrão, mas Railway usa a porta definida por PORT)
 EXPOSE 5173
 
-# Passo 7: Execute o comando de build do Vite para produção
+# Rodar o comando de build para produção
 RUN npm run build
 
-# Passo 8: Comando para iniciar o servidor do Vite em modo de desenvolvimento
-CMD ["npm", "run", "dev"]
+# Rodar o Vite em modo de desenvolvimento
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
