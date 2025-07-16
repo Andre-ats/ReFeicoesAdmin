@@ -40,9 +40,13 @@ export function Tabela(props: ITabela) {
                                     {item}
                                 </th>
                             ))}
+                            {props.botoesTabela.length > 0 && (
+                                <th className="text-center py-3 px-4 font-semibold text-sm uppercase tracking-wider">
+                                    Ações
+                                </th>
+                            )}
                         </tr>
                     </thead>
-
                     <tbody className="bg-white text-gray-700">
                         {props.objeto?.map((item: any, rowIndex: any) => (
                             <tr key={rowIndex} className="border-b hover:bg-gray-50 transition-colors duration-200">
@@ -69,17 +73,19 @@ export function Tabela(props: ITabela) {
                                         )}
                                     </td>
                                 ))}
-
-                                {props.botoesTabela.map((botao, index) => (
-                                    <td key={index} className="py-3 px-4 text-center">
-                                        <button
-                                            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-                                            onClick={() => botao.onClick(item)}
-                                        >
-                                            {botao.label}
-                                        </button>
+                                {props.botoesTabela.length > 0 && (
+                                    <td key={rowIndex} className="py-3 px-4 text-center">
+                                        {props.botoesTabela.map((botao, index) => (
+                                            <button
+                                                key={index}
+                                                className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 whitespace-nowrap" 
+                                                onClick={() => botao.onClick(item)}
+                                            >
+                                                {botao.label}
+                                            </button>
+                                        ))}
                                     </td>
-                                ))}
+                                )}
                             </tr>
                         ))}
                     </tbody>
