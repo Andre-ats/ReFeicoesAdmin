@@ -25,6 +25,7 @@ export async function GetItens() {
         console.log(data)
 
         const dataInterface: IGetItens[] = data.dados.map((item: any) => ({
+            Id: item.id,
             Nome: item.nome,
             Categoria: item.categoriaItem,
             Preco: item.preco,

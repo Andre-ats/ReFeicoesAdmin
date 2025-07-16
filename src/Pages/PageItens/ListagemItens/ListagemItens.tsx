@@ -3,6 +3,7 @@ import { LayoutAdmin } from "../../../Components/Layout/LayoutAdmin";
 import { Tabela } from "../../../Components/Tabela/Tabela";
 import { useEffect, useState } from "react";
 import { GetItens } from "../../../Api/Itens/GetItens";
+import { UpdateAtivarDesativar } from "../../../Api/Itens/UpdateAtivarDesativar";
 
 export function ListagemItens() {
 
@@ -23,6 +24,11 @@ export function ListagemItens() {
         fetchItens();
     }, []);
 
+    async function AtivarDesativarItem(item: any){
+        const data = await UpdateAtivarDesativar(item.Id)
+        console.log(data)
+    }
+
     return (
         <Fragment>
             <LayoutAdmin
@@ -40,8 +46,7 @@ export function ListagemItens() {
                         posicionamentoAtributos={["center", "center", "center", "center"]}
                         bgCor={[false, false, false, true]}
                         botoesTabela={[
-                            { label: "Ativar", onClick: (item) => console.log("Ativar", item) },
-                            { label: "Desativar", onClick: (item) => console.log("Desativar", item) }
+                            { label: "Ativar / Desativar", onClick: (item) => AtivarDesativarItem(item) }
                         ]}
                         setOrdenacao={[]}
                         setPagina={setPagina}
