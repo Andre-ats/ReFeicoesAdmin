@@ -68,7 +68,7 @@ export function FormularioComponent(props: InputForms) {
       }}
     >
       {props.label.map((lab, idx) => {
-        const value = getValue[idx] ?? "";
+        const value = getValue?.[idx] ?? "";
         const isEmpty = value === "";
         const isEnum = props.typeInput[idx] === "Enum";
 

@@ -78,7 +78,7 @@ export function Tabela(props: ITabela) {
                                         {props.botoesTabela.map((botao, index) => (
                                             <button
                                                 key={index}
-                                                className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 whitespace-nowrap" 
+                                                className="w-full bg-amareloReFeicoes text-black py-2 px-4 rounded-md whitespace-nowrap" 
                                                 onClick={() => botao.onClick(item)}
                                             >
                                                 {botao.label}
@@ -90,7 +90,6 @@ export function Tabela(props: ITabela) {
                         ))}
                     </tbody>
                 </table>
-
                 <div className="mb-4">
                     <ReactPaginate
                         pageCount={props.lastPage!}
