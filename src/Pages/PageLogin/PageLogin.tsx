@@ -51,7 +51,7 @@ export function PageLogin() {
             navigate("/admin/dashboard")
         }
 
-        localStorage.setItem('token', responseData);
+        localStorage.setItem('token', responseData.token);
     }
 
     return (
