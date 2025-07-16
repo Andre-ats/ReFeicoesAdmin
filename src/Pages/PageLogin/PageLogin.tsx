@@ -45,7 +45,9 @@ export function PageLogin() {
         const responseData = await PostLoginAdmin(result.data)
         setSpinner(false)
 
-        if(responseData != false){
+        console.log(responseData)
+
+        if(responseData.token){
             navigate("/admin/dashboard")
         }
 

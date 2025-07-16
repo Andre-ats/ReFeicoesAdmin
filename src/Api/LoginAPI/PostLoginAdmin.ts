@@ -25,8 +25,8 @@ export async function PostLoginAdmin(props: IPostLoginAdmin){
     
         const responseData = await response.json();
 
-        if (responseData.token) {
-            return responseData.token
+        if (responseData) {
+            return responseData
         }
         else{
             return false
