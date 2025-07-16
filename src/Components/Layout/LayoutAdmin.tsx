@@ -43,7 +43,7 @@ export function LayoutAdmin(props: ILayoutAdmin) {
                                     <div className="flex gap-6">
                                         {props.atalhosHeader?.map((item, index) => (
                                             <div key={index} className="cursor-pointer">
-                                                <p onClick={() => navigate("/admin/" + item.toLowerCase())}>{item}</p>
+                                                <p onClick={() => navigate("/admin/" + item.toLowerCase() + "/listagem")}>{item}</p>
                                             </div>
                                         ))}
                                     </div>
