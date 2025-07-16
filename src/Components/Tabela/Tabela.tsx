@@ -10,23 +10,15 @@ interface ITabela {
     setOrdenacao: any;
     setPagina: any;
     lastPage: number | undefined;
+    bgCor: boolean[];
+    botoesTabela: { label: string, onClick: (item: any) => void }[];
 }
 
 export function Tabela(props: ITabela) {
-    const [ordenacao, setOrdenacao] = useState("desc");
-    const [pagina, setPagina] = useState<number>();
-
-    async function handleOrdenacao(item: string) {
-        if (ordenacao === "asc") {
-            setOrdenacao("desc");
-        } else {
-            setOrdenacao("asc");
-        }
-        await props.setOrdenacao({ ordenacao, item });
-    }
+    const [pagina, setPagina] = useState<number>(0);
 
     useEffect(() => {
-        props.setPagina(pagina! + 1);
+        props.setPagina(pagina + 1);
     }, [pagina]);
 
     const handlePageChange = (selected: { selected: number }) => {
@@ -35,7 +27,6 @@ export function Tabela(props: ITabela) {
 
     return (
         <Fragment>
-            {/* Table Section */}
             <div className="overflow-x-auto">
                 <table className="w-full table-auto border-separate border-spacing-0.5">
                     <thead className="bg-gray-200 text-gray-800">
@@ -46,20 +37,7 @@ export function Tabela(props: ITabela) {
                                     key={key}
                                     className="text-left py-3 px-4 font-semibold text-sm uppercase tracking-wider cursor-pointer"
                                 >
-                                    <div className="flex items-center justify-between">
-                                        {item}
-                                        <button onClick={() => handleOrdenacao(props.atributosBody[key])}>
-                                            {ordenacao === "asc" ? (
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
-                                                    <path d="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z" />
-                                                </svg>
-                                            ) : (
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
-                                                    <path d="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z" />
-                                                </svg>
-                                            )}
-                                        </button>
-                                    </div>
+                                    {item}
                                 </th>
                             ))}
                         </tr>
@@ -74,13 +52,39 @@ export function Tabela(props: ITabela) {
                                         style={{ textAlign: `${props.posicionamentoAtributos[colIndex]}` }}
                                         className="py-3 px-4 text-sm font-medium text-gray-600"
                                     >
-                                        {item[atributo]}
+                                        {props.bgCor[colIndex] === true ? (
+                                            item.Status === "Ativo" ? (
+                                                <div className="bg-green-500 py-2 px-4 rounded-md text-white">
+                                                    {item[atributo]}
+                                                </div>
+                                            ) : (
+                                                <div className="bg-red-500 py-2 px-4 rounded-md text-white">
+                                                    {item[atributo]}
+                                                </div>
+                                            )
+                                        ) : (
+                                            <div>
+                                                {item[atributo]}
+                                            </div>
+                                        )}
+                                    </td>
+                                ))}
+
+                                {props.botoesTabela.map((botao, index) => (
+                                    <td key={index} className="py-3 px-4 text-center">
+                                        <button
+                                            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                                            onClick={() => botao.onClick(item)}
+                                        >
+                                            {botao.label}
+                                        </button>
                                     </td>
                                 ))}
                             </tr>
                         ))}
                     </tbody>
                 </table>
+
                 <div className="mb-4">
                     <ReactPaginate
                         pageCount={props.lastPage!}

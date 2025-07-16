@@ -33,11 +33,16 @@ export function ListagemItens() {
             >
                 <div className="mt-14">
                     <Tabela
-                        headerAtributos={["Nome", "Categoria", "Preco", "Status"]}
+                        headerAtributos={["Nome", "Categoria", "Preço", "Status"]}
                         atributosBody={["Nome", "Categoria", "Preco", "Status"]}
                         lastPage={itens?.totalPaginas}
                         objeto={itens}
                         posicionamentoAtributos={["center", "center", "center", "center"]}
+                        bgCor={[false, false, false, true]}
+                        botoesTabela={[
+                            { label: "Ativar", onClick: (item) => console.log("Ativar", item) },
+                            { label: "Desativar", onClick: (item) => console.log("Desativar", item) }
+                        ]}
                         setOrdenacao={[]}
                         setPagina={setPagina}
                     />
