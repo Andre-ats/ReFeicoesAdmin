@@ -50,7 +50,7 @@ export function ListagemItens() {
                         headerAtributos={["Nome", "Categoria", "Preço", "Status"]}
                         atributosBody={["Nome", "Categoria", "Preco", "Status"]}
                         lastPage={itens?.totalPaginas}
-                        objeto={itens}
+                        objeto={itens?.itens}
                         posicionamentoAtributos={["center", "center", "center", "center"]}
                         bgCor={[false, false, false, true]}
                         botoesTabela={[

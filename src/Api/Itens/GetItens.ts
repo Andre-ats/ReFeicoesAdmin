@@ -1,10 +1,17 @@
 import { API_URL } from "../API_URL";
 
 interface IGetItens {
-    Nome: string
-    Categoria: string
-    Preco: number
-    Status: string
+    paginaAtual: number;
+    quantidadePorPagina: number;
+    totalPaginas: number;
+    totalRegistros: number;
+    itens: {
+        Id: string;
+        Nome: string;
+        Categoria: string;
+        Preco: string;
+        Status: string;
+    }[];
 }
 
 export async function GetItens() {
@@ -24,13 +31,19 @@ export async function GetItens() {
 
         console.log(data)
 
-        const dataInterface: IGetItens[] = data.dados.map((item: any) => ({
-            Id: item.id,
-            Nome: item.nome,
-            Categoria: item.categoriaItem,
-            Preco: item.preco.toFixed(2),
-            Status: item.status === false ? "Inativo" : "Ativo",
-        }));
+        const dataInterface: IGetItens = {
+            paginaAtual: data.paginaAtual,
+            quantidadePorPagina: data.quantidadePorPagina,
+            totalPaginas: data.totalPaginas,
+            totalRegistros: data.totalRegistros,
+            itens: data.dados.map((item: any) => ({
+                Id: item.id,
+                Nome: item.nome,
+                Categoria: item.categoriaItem,
+                Preco: "R$ " + item.preco.toFixed(2),
+                Status: item.status === false ? "Inativo" : "Ativo",
+            }))
+        };
 
         return dataInterface;
     } catch (error) {
