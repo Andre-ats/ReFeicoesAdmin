@@ -54,7 +54,8 @@ export function ListagemItens() {
                         posicionamentoAtributos={["center", "center", "center", "center"]}
                         bgCor={[false, false, false, true]}
                         botoesTabela={[
-                            { label: "Ativar / Desativar", onClick: (item) => AtivarDesativarItem(item) }
+                            { label: "Ativar / Desativar", onClick: (item) => AtivarDesativarItem(item) },
+                            { label: "Verificar", onClick: (item) => navigate("/admin/itens/verificar/" + item.Id) }
                         ]}
                         setOrdenacao={[]}
                         setPagina={setPagina}

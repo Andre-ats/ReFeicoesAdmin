@@ -75,15 +75,17 @@ export function Tabela(props: ITabela) {
                                 ))}
                                 {props.botoesTabela.length > 0 && (
                                     <td key={rowIndex} className="py-3 px-4 text-center">
-                                        {props.botoesTabela.map((botao, index) => (
-                                            <button
-                                                key={index}
-                                                className="w-full bg-amareloReFeicoes text-black py-2 px-4 rounded-md whitespace-nowrap" 
-                                                onClick={() => botao.onClick(item)}
-                                            >
-                                                {botao.label}
-                                            </button>
-                                        ))}
+                                        <div className="flex space-x-2">
+                                            {props.botoesTabela.map((botao, index) => (
+                                                <button
+                                                    key={index}
+                                                    className="bg-amareloReFeicoes text-black py-2 px-4 rounded-md whitespace-nowrap"
+                                                    onClick={() => botao.onClick(item)}
+                                                >
+                                                    {botao.label}
+                                                </button>
+                                            ))}
+                                        </div>
                                     </td>
                                 )}
                             </tr>
