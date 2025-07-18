@@ -2,6 +2,7 @@ import { InfoIcon, X } from "lucide-react";
 import { ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
+import logoRefeicoes from "../../Imagens/Logo/LogoRefeicoes.png"
 
 interface ILayoutAdmin {
     header?: boolean
@@ -36,7 +37,7 @@ export function LayoutAdmin(props: ILayoutAdmin) {
                     {props.header &&
                         <header className="w-full flex justify-between items-center h-20 px-10 bg-zinc-800 rounded-b-2xl">
                             <div className="text-white">
-                                <img src="" alt="Logo" />
+                                <img className="w-[70px]" src={logoRefeicoes} alt="Logo" />
                             </div>
                             <div className="text-white">
                                 {props.atalhosHeader?.length! > 0 && (

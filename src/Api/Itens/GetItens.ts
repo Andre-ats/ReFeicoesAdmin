@@ -28,7 +28,7 @@ export async function GetItens() {
             Id: item.id,
             Nome: item.nome,
             Categoria: item.categoriaItem,
-            Preco: item.preco,
+            Preco: item.preco.toFixed(2),
             Status: item.status === false ? "Inativo" : "Ativo",
         }));
 
