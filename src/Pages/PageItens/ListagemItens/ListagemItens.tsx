@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { GetItens } from "../../../Api/Itens/GetItens";
 import { UpdateAtivarDesativar } from "../../../Api/Itens/UpdateAtivarDesativar";
 import { useNavigate } from "react-router-dom";
+import { FormularioComponent } from "../../../Components/Formulario/Formulario";
 
 export function ListagemItens() {
 
@@ -13,6 +14,7 @@ export function ListagemItens() {
     const [pagina, setPagina] = useState<number>()
     const [itens, setItens] = useState<any>()
     const [registrosQuantia, SetRegistrosQuantia] = useState()
+    const [filtroDados, setFiltrosDados] = useState<any>([])
     //const [ordenacao, setOrdenacao] = useState({ordenacao:undefined, item:undefined})
 
     var parametro = ""
@@ -29,17 +31,24 @@ export function ListagemItens() {
         fetchItens();
     }, []);
 
-    async function AtivarDesativarItem(item: any){
+    async function AtivarDesativarItem(item: any) {
         const data = await UpdateAtivarDesativar(item.Id)
         console.log(data)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         if (registrosQuantia !== undefined) {
             setPagina(1);
         }
-        
-        parametro = `?${pagina ? "&numeroDaPagina=" + pagina : ""}${registrosQuantia ? "&numeroRegistros=" + registrosQuantia : ""}`
+
+        parametro = `?${pagina ? "&numeroDaPagina=" + pagina : ""}
+        ${registrosQuantia ? "&numeroRegistros=" + registrosQuantia : ""}
+        ${filtroDados[0] ? "&Nome=" + filtroDados[0] : ""}
+        ${filtroDados[1] ? "&Categoria=" + filtroDados[1] : ""}
+        ${filtroDados[2] ? "&PrecoMin=" + filtroDados[2] : ""}
+        ${filtroDados[3] ? "&PrecoMax=" + filtroDados[3] : ""}
+        ${filtroDados[4] ? "&Status=" + filtroDados[4] : ""}
+        `
 
         const fetchItens = async () => {
             try {
@@ -51,7 +60,7 @@ export function ListagemItens() {
         };
         fetchItens();
 
-    },[pagina, registrosQuantia])
+    }, [pagina, registrosQuantia, filtroDados])
 
     return (
         <Fragment>
@@ -63,9 +72,21 @@ export function ListagemItens() {
             >
                 <div className="mt-8 w-full">
                     <div className="w-full mb-6 pr-4">
-                        <button onClick={()=>navigate("/admin/itens/criarItem")} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap">
+                        <button onClick={() => navigate("/admin/itens/criarItem")} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap">
                             + Criar item
                         </button>
+                    </div>
+                    <div className="flex">
+                        <div className="w-full">
+                            <FormularioComponent
+                                dadosState={filtroDados}
+                                label={["Nome", "Categoria", "Preço Min", "Preço Max", "Status"]}
+                                required={[true]}
+                                setDadosState={setFiltrosDados}
+                                typeInput={[]}
+                                QuantiaElementoLinha={5}
+                            />
+                        </div>
                     </div>
                     <Tabela
                         headerAtributos={["Nome", "Categoria", "Preço", "Status"]}
