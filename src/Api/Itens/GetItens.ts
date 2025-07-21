@@ -14,9 +14,9 @@ interface IGetItens {
     }[];
 }
 
-export async function GetItens() {
+export async function GetItens(parametro?: string) {
     try {
-        const response = await fetch(API_URL + '/Item/GetItens', {
+        const response = await fetch(API_URL + `/Item/GetItens${parametro ? parametro : ""}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

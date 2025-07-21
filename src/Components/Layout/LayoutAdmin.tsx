@@ -37,7 +37,7 @@ export function LayoutAdmin(props: ILayoutAdmin) {
                     {props.header &&
                         <header className="w-full flex justify-between items-center h-20 px-10 bg-zinc-800 rounded-b-2xl">
                             <div className="text-white">
-                                <img className="w-[70px]" src={logoRefeicoes} alt="Logo" />
+                                <img onClick={() => navigate("/admin/dashboard")} className="w-[70px] cursor-pointer" src={logoRefeicoes} alt="Logo" />
                             </div>
                             <div className="text-white">
                                 {props.atalhosHeader?.length! > 0 && (

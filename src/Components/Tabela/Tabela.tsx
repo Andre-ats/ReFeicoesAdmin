@@ -12,10 +12,12 @@ interface ITabela {
     lastPage: number | undefined;
     bgCor: boolean[];
     botoesTabela: { label: string, onClick: (item: any) => void }[];
+    setRegistroQuantia: any; // Adicionando função para atualizar a quantidade de registros
 }
 
 export function Tabela(props: ITabela) {
     const [pagina, setPagina] = useState<number>(0);
+    const [quantiaPorPagina, setQuantiaPorPagina] = useState<number>(10); // Estado para controlar a quantidade por página
 
     useEffect(() => {
         props.setPagina(pagina + 1);
@@ -23,6 +25,12 @@ export function Tabela(props: ITabela) {
 
     const handlePageChange = (selected: { selected: number }) => {
         setPagina(selected.selected);
+    };
+
+    const handleQuantiaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newQuantia = parseInt(e.target.value);
+        setQuantiaPorPagina(newQuantia);
+        props.setRegistroQuantia(newQuantia);
     };
 
     return (
@@ -92,7 +100,7 @@ export function Tabela(props: ITabela) {
                         ))}
                     </tbody>
                 </table>
-                <div className="mb-4">
+                <div className="mb-4 flex items-center justify-between">
                     <ReactPaginate
                         pageCount={props.lastPage!}
                         pageRangeDisplayed={2}
@@ -107,6 +115,20 @@ export function Tabela(props: ITabela) {
                         previousLabel="&laquo;"
                         nextLabel="&raquo;"
                     />
+                    <div className="flex items-center space-x-2">
+                        <label htmlFor="quantia" className="text-sm">Mostrar por:</label>
+                        <select
+                            id="quantia"
+                            className="p-2 border border-gray-300 rounded-md"
+                            value={quantiaPorPagina}
+                            onChange={handleQuantiaChange}
+                        >
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </Fragment>

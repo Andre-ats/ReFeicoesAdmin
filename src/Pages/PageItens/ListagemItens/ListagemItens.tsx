@@ -10,10 +10,12 @@ export function ListagemItens() {
 
     const navigate = useNavigate()
 
-    const [, setPagina] = useState()
+    const [pagina, setPagina] = useState()
     const [itens, setItens] = useState<any>()
+    const [registrosQuantia, SetRegistrosQuantia] = useState()
+    //const [ordenacao, setOrdenacao] = useState({ordenacao:undefined, item:undefined})
 
-    console.log(itens)
+    var parametro = ""
 
     useEffect(() => {
         const fetchItens = async () => {
@@ -31,6 +33,21 @@ export function ListagemItens() {
         const data = await UpdateAtivarDesativar(item.Id)
         console.log(data)
     }
+
+    useEffect(()=>{
+        parametro = `?${pagina ? "&numeroDaPagina=" + pagina : ""}${registrosQuantia ? "&numeroRegistros=" + registrosQuantia : ""}`
+
+        const fetchItens = async () => {
+            try {
+                const data = await GetItens(parametro);
+                setItens(data);
+            } catch (error) {
+                console.error("Erro ao buscar os itens:", error);
+            }
+        };
+        fetchItens();
+
+    },[pagina, registrosQuantia])
 
     return (
         <Fragment>
@@ -59,6 +76,7 @@ export function ListagemItens() {
                         ]}
                         setOrdenacao={[]}
                         setPagina={setPagina}
+                        setRegistroQuantia={SetRegistrosQuantia}
                     />
                 </div>
             </LayoutAdmin>
