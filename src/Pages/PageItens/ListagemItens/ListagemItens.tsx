@@ -10,7 +10,7 @@ export function ListagemItens() {
 
     const navigate = useNavigate()
 
-    const [pagina, setPagina] = useState()
+    const [pagina, setPagina] = useState<number>()
     const [itens, setItens] = useState<any>()
     const [registrosQuantia, SetRegistrosQuantia] = useState()
     //const [ordenacao, setOrdenacao] = useState({ordenacao:undefined, item:undefined})
@@ -35,6 +35,10 @@ export function ListagemItens() {
     }
 
     useEffect(()=>{
+        if (registrosQuantia !== undefined) {
+            setPagina(1);
+        }
+        
         parametro = `?${pagina ? "&numeroDaPagina=" + pagina : ""}${registrosQuantia ? "&numeroRegistros=" + registrosQuantia : ""}`
 
         const fetchItens = async () => {

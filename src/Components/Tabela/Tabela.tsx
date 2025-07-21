@@ -116,7 +116,7 @@ export function Tabela(props: ITabela) {
                         nextLabel="&raquo;"
                     />
                     <div className="flex items-center space-x-2">
-                        <label htmlFor="quantia" className="text-sm">Mostrar por:</label>
+                        <label htmlFor="quantia" className="text-sm">Quantidade Registros:</label>
                         <select
                             id="quantia"
                             className="p-2 border border-gray-300 rounded-md"
