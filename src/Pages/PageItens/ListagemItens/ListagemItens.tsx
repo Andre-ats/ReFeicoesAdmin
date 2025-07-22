@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { FormularioComponent } from "../../../Components/Formulario/Formulario";
 import { Categoria } from "../../../Api/Itens/Enums/EnumCategoria";
 
-enum Status{
+enum Status {
     Ativo = "Ativo",
     Inativo = "Inativo"
 }
@@ -44,7 +44,7 @@ export function ListagemItens() {
     }
 
     useEffect(() => {
-        if (registrosQuantia !== undefined) {
+        if (registrosQuantia !== undefined || filtroDados !== undefined) {
             setPagina(1);
         }
 
@@ -69,6 +69,8 @@ export function ListagemItens() {
         fetchItens();
 
     }, [pagina, registrosQuantia, filtroDados])
+
+    console.log(itens)
 
     return (
         <Fragment>
@@ -97,23 +99,37 @@ export function ListagemItens() {
                             />
                         </div>
                     </div>
-                    <Tabela
-                        headerAtributos={["Nome", "Categoria", "Preço", "Status"]}
-                        atributosBody={["Nome", "Categoria", "Preco", "Status"]}
-                        lastPage={itens?.totalPaginas}
-                        objeto={itens?.itens}
-                        posicionamentoAtributos={["center", "center", "center", "center"]}
-                        bgCor={[false, false, false, true]}
-                        botoesTabela={[
-                            { label: "Ativar / Desativar", onClick: (item) => AtivarDesativarItem(item) },
-                            { label: "Verificar", onClick: (item) => navigate("/admin/itens/verificar/" + item.Id) }
-                        ]}
-                        setOrdenacao={[]}
-                        setPagina={setPagina}
-                        setRegistroQuantia={SetRegistrosQuantia}
-                    />
+                    {itens?.itens.length > 0 ? (
+                        <div>
+                            <Tabela
+                                headerAtributos={["Nome", "Categoria", "Preço", "Status"]}
+                                atributosBody={["Nome", "Categoria", "Preco", "Status"]}
+                                lastPage={itens?.totalPaginas}
+                                objeto={itens?.itens}
+                                posicionamentoAtributos={["center", "center", "center", "center"]}
+                                bgCor={[false, false, false, true]}
+                                botoesTabela={[
+                                    { label: "Ativar / Desativar", onClick: (item) => AtivarDesativarItem(item) },
+                                    { label: "Verificar", onClick: (item) => navigate("/admin/itens/verificar/" + item.Id) }
+                                ]}
+                                setOrdenacao={[]}
+                                setPagina={setPagina}
+                                setRegistroQuantia={SetRegistrosQuantia}
+                            />
+                        </div>
+                    ) :
+                        <div className="flex justify-center items-center min-h-[300px]">
+                            <div className="text-center animate__animated animate__fadeIn animate__delay-1s">
+                                <p className="text-xl font-semibold text-gray-600 mb-4">Nenhum item encontrado</p>
+                                <div className="text-3xl text-yellow-500 animate-bounce">
+                                    <i className="fas fa-search"></i> {/* Ícone de busca */}
+                                </div>
+                                <p className="text-sm text-gray-500 mt-2">Por favor, verifique seu filtro ou tente novamente mais tarde.</p>
+                            </div>
+                        </div>
+                    }
                 </div>
             </LayoutAdmin>
-        </Fragment>
+        </Fragment >
     )
 }
