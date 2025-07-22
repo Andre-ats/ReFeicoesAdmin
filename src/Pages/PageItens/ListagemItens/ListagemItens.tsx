@@ -40,7 +40,7 @@ export function ListagemItens() {
         await UpdateAtivarDesativar(item.Id)
     }
 
-    console.log(pagina)
+    console.log(itens)
 
     useEffect(() => {
         let parametro = `?${pagina ? "numeroDaPagina=" + pagina : ""}
@@ -76,7 +76,7 @@ export function ListagemItens() {
         <Fragment>
             <LayoutAdmin
                 header
-                atalhosHeader={["Dashboard", "itens", "Pedidos"]}
+                atalhosHeader={["Dashboard", "Itens", "Pedidos"]}
                 infoPagina
                 infoPaginaTexto="Listagem de todos os itens que o sistema possui."
             >
@@ -91,7 +91,7 @@ export function ListagemItens() {
                             <FormularioComponent
                                 dadosState={filtroDados}
                                 label={["Nome", "Categoria", "Preço Min", "Preço Max", "Status"]}
-                                required={[true]}
+                                required={[false, false, false]}
                                 setDadosState={setFiltrosDados}
                                 typeInput={["text", "Enum", "number", "number", "Enum"]}
                                 Enum={[null, enumToArray(Categoria), null, null, enumToArray(Status)]}

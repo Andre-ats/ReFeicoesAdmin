@@ -65,7 +65,7 @@ export function Tabela(props: ITabela) {
                                         className="py-3 px-4 text-sm font-medium text-gray-600"
                                     >
                                         {props.bgCor[colIndex] === true ? (
-                                            item.Status === "Ativo" ? (
+                                            item.Status === "Ativo" || item.pagamentoStatus === "Aprovado" ? (
                                                 <div className="bg-green-500 py-2 px-4 rounded-md text-white">
                                                     {item[atributo]}
                                                 </div>

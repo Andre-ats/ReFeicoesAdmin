@@ -53,7 +53,7 @@ export function CriarItem() {
         <Fragment>
             <LayoutAdmin
                 header
-                atalhosHeader={["Dashboard", "itens", "Pedidos"]}
+                atalhosHeader={["Dashboard", "Itens", "Pedidos"]}
                 infoPagina
                 infoPaginaTexto="Criação de itens que ficam visíveis para todos os usuários."
             >
