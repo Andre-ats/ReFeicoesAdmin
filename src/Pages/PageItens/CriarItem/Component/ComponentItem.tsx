@@ -3,11 +3,11 @@ import { FormularioComponent } from "../../../../Components/Formulario/Formulari
 import { Frown, Trash } from "lucide-react";
 import Modal from "../../../../Components/Modal/Modal";
 import { Categoria } from "../../../../Api/Itens/Enums/EnumCategoria";
+import { IPostCriarItem } from "../../../../Api/Itens/PostCriarItem";
+import { schemaCriarItem } from "../SchemaCriarItem/SchemaCriarItem";
 
 interface IComponentItem {
     setDados: any;
-    setIngredientes: any;
-    setDescricao: any;
 }
 
 export function ComponentItem(props: IComponentItem) {
@@ -17,6 +17,9 @@ export function ComponentItem(props: IComponentItem) {
     const [novoIngrediente, setNovoIngrediente] = useState<string>("");
     const [descricao, setDescricao] = useState<string>(""); // Estado para a descrição
     const [showModal, setShowModal] = useState(false);
+
+    const [descErro, setDescErro] = useState<string | undefined>()
+    const [modalErro, setModalErro] = useState(false)
     const enumToArray = (e: any) => Object.values(e);
 
     const addIngrediente = () => {
@@ -33,9 +36,33 @@ export function ComponentItem(props: IComponentItem) {
     };
 
     function salvarDados() {
-        props.setDados(itemDados);
-        props.setIngredientes(ingredientes);
-        props.setDescricao(descricao);
+        const objeto: IPostCriarItem = {
+            nome: itemDados?.[0] || "",
+            descricao: descricao || "",
+            preco: parseFloat(itemDados?.[1] || "0"),
+            status: true,
+            categoriaItem: itemDados?.[2] || "",
+            ingredientes: ingredientes || [],
+        };
+
+        const result = schemaCriarItem.safeParse(objeto);
+
+        if (!result.success) {
+            const formatted = result.error.format();
+            const campos = [
+                formatted.nome?._errors[0],
+                formatted.preco?._errors[0],
+                formatted.categoriaItem?._errors[0],
+                formatted.descricao?._errors[0],
+                formatted.ingredientes?._errors[0],
+            ].filter(Boolean).join(", ");
+
+            setDescErro(campos)
+            setModalErro(true)
+            return;
+        }
+
+        props.setDados(objeto);
     }
 
     return (
@@ -57,8 +84,8 @@ export function ComponentItem(props: IComponentItem) {
                             <textarea
                                 id="ingrediente"
                                 className="p-2 border border-gray-300 rounded-md h-[137px] resize-none mt-2 w-full"
-                                value={descricao} // Vinculando o valor com o estado
-                                onChange={(e) => setDescricao(e.target.value)} // Atualizando o estado ao digitar
+                                value={descricao}
+                                onChange={(e) => setDescricao(e.target.value)}
                             />
                         </div>
                     </div>
@@ -128,6 +155,23 @@ export function ComponentItem(props: IComponentItem) {
                     </div>
                 </Modal>
             }
+            {modalErro && (
+                <Modal
+                    isOpen
+                    onClose={() => setModalErro(false)}
+                    tituloModal="Erro de Validação"
+                >
+                    <div>
+                        {descErro && (
+                            <ul className="list-disc pl-5 space-y-2">
+                                {descErro.split(",").map((erro, index) => (
+                                    <li key={index} className="text-red-500 text-sm">{erro.trim()}</li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                </Modal>
+            )}
         </Fragment>
     );
 }

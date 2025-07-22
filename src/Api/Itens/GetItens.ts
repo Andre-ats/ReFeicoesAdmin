@@ -29,8 +29,6 @@ export async function GetItens(parametro?: string) {
 
         const data = await response.json();
 
-        console.log(data)
-
         const dataInterface: IGetItens = {
             paginaAtual: data.paginaAtual,
             quantidadePorPagina: data.quantidadePorPagina,

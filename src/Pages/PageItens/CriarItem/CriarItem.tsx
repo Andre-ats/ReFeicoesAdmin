@@ -4,17 +4,18 @@ import { Stepper } from "../../../Components/Stepper/Stepper";
 import { ComponentItem } from "./Component/ComponentItem";
 import { ComponentImagem } from "./Component/ComponentImagem";
 import { useEffect, useState } from "react";
-import { IPostCriarItem, PostCriarItem } from "../../../Api/Itens/PostCriarItem";
+import { PostCriarItem } from "../../../Api/Itens/PostCriarItem";
 import { PostCriarImagem } from "../../../Api/Itens/PostCriarImagem";
 import { Spinner } from "../../../Components/Spinner/Spinner";
+import Modal from "../../../Components/Modal/Modal";
 
 export function CriarItem() {
 
     const [passoatual, setPassoatual] = useState(0)
     const [itemDados, setItemDados] = useState()
-    const [ingredientes, setIngredientes] = useState()
-    const [descricao, setDescricao] = useState()
     const [imagem, setImagem] = useState<File | null>(null);
+
+    const [erroImagem, setErroImagem] = useState(false)
 
     const [loading, setLoading] = useState(false)
 
@@ -24,26 +25,23 @@ export function CriarItem() {
         }
     }, [itemDados])
 
+    console.log(itemDados)
+
     async function handleCriarItem() {
-        const objeto: IPostCriarItem = {
-            nome: itemDados?.[0] || "",
-            descricao: descricao || "",
-            preco: parseFloat(itemDados?.[1] || "0"),
-            status: true,
-            categoriaItem: itemDados?.[2] || "",
-            ingredientes: ingredientes || [],
-        };
-
+        if (!imagem) {
+            setErroImagem(true)
+            return
+        }
         setLoading(true)
-    
-        const response = await PostCriarItem(objeto);
 
-        if(response.itemId){
+        const response = await PostCriarItem(itemDados!);
+
+        if (response.itemId) {
             await PostCriarImagem(response.itemId, imagem!)
         }
 
         setLoading(false)
-    
+
         if (response.error) {
             console.error(response.error);
         } else {
@@ -69,8 +67,6 @@ export function CriarItem() {
                 {passoatual == 0 &&
                     <ComponentItem
                         setDados={setItemDados}
-                        setIngredientes={setIngredientes}
-                        setDescricao={setDescricao}
                     />
                 }
                 {passoatual == 1 &&
@@ -80,14 +76,27 @@ export function CriarItem() {
                         />
                         <div className="flex justify-center">
                             <button
-                                onClick={()=>handleCriarItem()}
+                                onClick={() => handleCriarItem()}
                                 className="bg-amareloReFeicoes text-black py-2 px-4 rounded-md w-1/4 mt-24">Criar Item</button>
                         </div>
                     </Fragment>
                 }
             </LayoutAdmin>
             {loading == true &&
-                <Spinner/>
+                <Spinner />
+            }
+            {erroImagem &&
+                <Modal
+                    isOpen
+                    onClose={() => setErroImagem(false)}
+                    tituloModal="Imagem Inválida"
+                >
+                    <div>
+                        <p className="text-gray-600 text-sm">
+                            A imagem é obrigatória. Se o problema persistir, por favor, tente novamente mais tarde ou entre em contato com o suporte.
+                        </p>
+                    </div>
+                </Modal>
             }
         </Fragment>
     )

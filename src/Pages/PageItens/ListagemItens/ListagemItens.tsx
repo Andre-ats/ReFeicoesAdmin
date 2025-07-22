@@ -24,8 +24,6 @@ export function ListagemItens() {
     const [filtroDados, setFiltrosDados] = useState<any>([])
     //const [ordenacao, setOrdenacao] = useState({ordenacao:undefined, item:undefined})
 
-    var parametro = ""
-
     useEffect(() => {
         const fetchItens = async () => {
             try {
@@ -39,24 +37,21 @@ export function ListagemItens() {
     }, []);
 
     async function AtivarDesativarItem(item: any) {
-        const data = await UpdateAtivarDesativar(item.Id)
-        console.log(data)
+        await UpdateAtivarDesativar(item.Id)
     }
 
-    useEffect(() => {
-        if (registrosQuantia !== undefined || filtroDados !== undefined) {
-            setPagina(1);
-        }
+    console.log(pagina)
 
-        parametro = `?${pagina ? "numeroDaPagina=" + pagina : ""}
-            ${registrosQuantia ? "&numeroRegistros=" + registrosQuantia : ""}
-            ${filtroDados[0] ? "&Nome=" + filtroDados[0] : ""}
-            ${filtroDados[1] ? "&Categoria=" + filtroDados[1] : ""}
-            ${filtroDados[2] ? "&PrecoMin=" + filtroDados[2] : ""}
-            ${filtroDados[3] ? "&PrecoMax=" + filtroDados[3] : ""}
-            ${filtroDados[4] ? "&Status=" + (filtroDados[4] == "Ativo" ? true : false) : ""}`
+    useEffect(() => {
+        let parametro = `?${pagina ? "numeroDaPagina=" + pagina : ""}
+        ${registrosQuantia ? "&numeroRegistros=" + registrosQuantia : ""}
+        ${filtroDados[0] ? "&Nome=" + filtroDados[0] : ""}
+        ${filtroDados[1] ? "&Categoria=" + filtroDados[1] : ""}
+        ${filtroDados[2] ? "&PrecoMin=" + filtroDados[2] : ""}
+        ${filtroDados[3] ? "&PrecoMax=" + filtroDados[3] : ""}
+        ${filtroDados[4] ? "&Status=" + (filtroDados[4] === "Ativo" ? true : false) : ""}`
             .replace(/\?&/, "?")
-            .replace(/\s+/g, "")
+            .replace(/\s+/g, "");
 
         const fetchItens = async () => {
             try {
@@ -66,11 +61,16 @@ export function ListagemItens() {
                 console.error("Erro ao buscar os itens:", error);
             }
         };
+
         fetchItens();
 
-    }, [pagina, registrosQuantia, filtroDados])
+    }, [pagina, registrosQuantia, filtroDados]);
 
-    console.log(itens)
+    useEffect(() => {
+        if (registrosQuantia !== undefined || filtroDados !== undefined) {
+            setPagina(1);
+        }
+    }, [registrosQuantia, filtroDados]);
 
     return (
         <Fragment>
@@ -122,7 +122,7 @@ export function ListagemItens() {
                             <div className="text-center animate__animated animate__fadeIn animate__delay-1s">
                                 <p className="text-xl font-semibold text-gray-600 mb-4">Nenhum item encontrado</p>
                                 <div className="text-3xl text-yellow-500 animate-bounce">
-                                    <i className="fas fa-search"></i> {/* Ícone de busca */}
+                                    <i className="fas fa-search"></i>
                                 </div>
                                 <p className="text-sm text-gray-500 mt-2">Por favor, verifique seu filtro ou tente novamente mais tarde.</p>
                             </div>
