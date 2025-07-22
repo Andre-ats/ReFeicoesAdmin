@@ -2,11 +2,7 @@ import { Fragment, useState } from "react";
 import { FormularioComponent } from "../../../../Components/Formulario/Formulario";
 import { Frown, Trash } from "lucide-react";
 import Modal from "../../../../Components/Modal/Modal";
-
-enum ECategoria {
-    Teste01 = "Teste01",
-    Teste02 = "Teste02"
-}
+import { Categoria } from "../../../../Api/Itens/Enums/EnumCategoria";
 
 interface IComponentItem {
     setDados: any;
@@ -53,7 +49,7 @@ export function ComponentItem(props: IComponentItem) {
                             label={["Nome", "Preço", "Categoria"]}
                             required={[true, true, true]}
                             typeInput={["text", "number", "Enum"]}
-                            Enum={[null, null, enumToArray(ECategoria)]}
+                            Enum={[null, null, enumToArray(Categoria)]}
                             QuantiaElementoLinha={1}
                         />
                         <div className="w-full">

@@ -6,11 +6,18 @@ import { GetItens } from "../../../Api/Itens/GetItens";
 import { UpdateAtivarDesativar } from "../../../Api/Itens/UpdateAtivarDesativar";
 import { useNavigate } from "react-router-dom";
 import { FormularioComponent } from "../../../Components/Formulario/Formulario";
+import { Categoria } from "../../../Api/Itens/Enums/EnumCategoria";
+
+enum Status{
+    Ativo = "Ativo",
+    Inativo = "Inativo"
+}
 
 export function ListagemItens() {
 
     const navigate = useNavigate()
 
+    const enumToArray = (e: any) => Object.values(e);
     const [pagina, setPagina] = useState<number>()
     const [itens, setItens] = useState<any>()
     const [registrosQuantia, SetRegistrosQuantia] = useState()
@@ -41,14 +48,15 @@ export function ListagemItens() {
             setPagina(1);
         }
 
-        parametro = `?${pagina ? "&numeroDaPagina=" + pagina : ""}
-        ${registrosQuantia ? "&numeroRegistros=" + registrosQuantia : ""}
-        ${filtroDados[0] ? "&Nome=" + filtroDados[0] : ""}
-        ${filtroDados[1] ? "&Categoria=" + filtroDados[1] : ""}
-        ${filtroDados[2] ? "&PrecoMin=" + filtroDados[2] : ""}
-        ${filtroDados[3] ? "&PrecoMax=" + filtroDados[3] : ""}
-        ${filtroDados[4] ? "&Status=" + filtroDados[4] : ""}
-        `
+        parametro = `?${pagina ? "numeroDaPagina=" + pagina : ""}
+            ${registrosQuantia ? "&numeroRegistros=" + registrosQuantia : ""}
+            ${filtroDados[0] ? "&Nome=" + filtroDados[0] : ""}
+            ${filtroDados[1] ? "&Categoria=" + filtroDados[1] : ""}
+            ${filtroDados[2] ? "&PrecoMin=" + filtroDados[2] : ""}
+            ${filtroDados[3] ? "&PrecoMax=" + filtroDados[3] : ""}
+            ${filtroDados[4] ? "&Status=" + (filtroDados[4] == "Ativo" ? true : false) : ""}`
+            .replace(/\?&/, "?")
+            .replace(/\s+/g, "")
 
         const fetchItens = async () => {
             try {
@@ -83,7 +91,8 @@ export function ListagemItens() {
                                 label={["Nome", "Categoria", "Preço Min", "Preço Max", "Status"]}
                                 required={[true]}
                                 setDadosState={setFiltrosDados}
-                                typeInput={[]}
+                                typeInput={["text", "Enum", "number", "number", "Enum"]}
+                                Enum={[null, enumToArray(Categoria), null, null, enumToArray(Status)]}
                                 QuantiaElementoLinha={5}
                             />
                         </div>

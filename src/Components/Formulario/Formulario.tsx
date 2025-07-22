@@ -79,7 +79,7 @@ export function FormularioComponent(props: InputForms) {
             </label>
 
             {isEnum && Array.isArray(props.Enum?.[idx]) && (
-              <div className="relative w-1/2"> {/* mantém w-1/2 aqui */}
+              <div className="relative w-full"> {/* mantém w-1/2 aqui */}
                 <select
                   className={`
         block w-full bg-white rounded-lg border px-4 py-2 mt-3 h-10 text-sm
