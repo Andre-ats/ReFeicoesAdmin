@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { LayoutAdmin } from "../../../Components/Layout/LayoutAdmin";
 import { Tabela } from "../../../Components/Tabela/Tabela";
 import { FormularioComponent } from "../../../Components/Formulario/Formulario";
@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { GetTodosPedidosTabela } from "../../../Api/Pedidos/GetTodosPedidosTabela";
 
 enum StatusPedido {
-    Entregue = "Entregue", 
-    Pendente = "Pendente", 
+    Entregue = "Entregue",
+    Pendente = "Pendente",
     Cancelado = "Cancelado"
 }
 
@@ -34,32 +34,32 @@ export function ListagemPedidos() {
     }, []);
 
     useEffect(() => {
-            let parametro = `?${pagina ? "numeroDaPagina=" + pagina : ""}
+        let parametro = `?${pagina ? "numeroDaPagina=" + pagina : ""}
             ${registrosQuantia ? "&numeroRegistros=" + registrosQuantia : ""}
             ${filtroDados[0] ? "&PedidoId=" + filtroDados[0] : ""}
             ${filtroDados[1] ? "&Email=" + filtroDados[1] : ""}
             ${filtroDados[2] ? "&StatusPedido=" + filtroDados[2] : ""}`
-                .replace(/\?&/, "?")
-                .replace(/\s+/g, "");
-    
-            const fetchItens = async () => {
-                try {
-                    const data = await GetTodosPedidosTabela(parametro);
-                    setPedidos(data);
-                } catch (error) {
-                    console.error("Erro ao buscar os pedidos:", error);
-                }
-            };
-    
-            fetchItens();
-    
-        }, [pagina, registrosQuantia, filtroDados]);
-    
-        useEffect(() => {
-            if (registrosQuantia !== undefined || filtroDados !== undefined) {
-                setPagina(1);
+            .replace(/\?&/, "?")
+            .replace(/\s+/g, "");
+
+        const fetchItens = async () => {
+            try {
+                const data = await GetTodosPedidosTabela(parametro);
+                setPedidos(data);
+            } catch (error) {
+                console.error("Erro ao buscar os pedidos:", error);
             }
-        }, [registrosQuantia, filtroDados]);
+        };
+
+        fetchItens();
+
+    }, [pagina, registrosQuantia, filtroDados]);
+
+    useEffect(() => {
+        if (registrosQuantia !== undefined || filtroDados !== undefined) {
+            setPagina(1);
+        }
+    }, [registrosQuantia, filtroDados]);
 
     return (
         <LayoutAdmin
@@ -68,36 +68,38 @@ export function ListagemPedidos() {
             infoPagina
             infoPaginaTexto="Listagem de todos os pedidos que o sistema possui."
         >
-            <div className="mt-8 w-full">
-                <div className="flex">
-                    <div className="w-full">
-                        <FormularioComponent
-                            dadosState={filtroDados}
-                            label={["Pedido ID", "Email Usuario", "Status Pedido"]}
-                            required={[false, false, false]}
-                            setDadosState={setFiltrosDados}
-                            typeInput={["text", "email", "Enum"]}
-                            Enum={[false, false, enumToArray(StatusPedido)]}
-                            QuantiaElementoLinha={3}
-                        />
-                    </div>
-                </div>
-                {pedidos?.dados ? (
-                    <div>
-                        <Tabela
-                            headerAtributos={["Pedido ID", "Usuario Email", "Valor Pago", "Pedido Status"]}
-                            atributosBody={["id", "compradorEmail", "somaPreco", "pedidoStatus"]}
-                            lastPage={pedidos?.totalPaginas}
-                            objeto={pedidos?.dados}
-                            posicionamentoAtributos={["center", "center", "center", "center"]}
-                            bgCor={[false, false, false, true]}
-                            botoesTabela={[
-                                { label: "Verificar", onClick: (item) => navigate("/admin/pedidos/verificar/" + item.id) }
-                            ]}
-                            setOrdenacao={[]}
-                            setPagina={setPagina}
-                            setRegistroQuantia={SetRegistrosQuantia}
-                        />
+            <Fragment>
+                {pedidos?.dados > 0 ? (
+                    <div className="mt-8 w-full">
+                        <div className="flex">
+                            <div className="w-full">
+                                <FormularioComponent
+                                    dadosState={filtroDados}
+                                    label={["Pedido ID", "Email Usuario", "Status Pedido"]}
+                                    required={[false, false, false]}
+                                    setDadosState={setFiltrosDados}
+                                    typeInput={["text", "email", "Enum"]}
+                                    Enum={[false, false, enumToArray(StatusPedido)]}
+                                    QuantiaElementoLinha={3}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <Tabela
+                                headerAtributos={["Pedido ID", "Usuario Email", "Valor Pago", "Pedido Status"]}
+                                atributosBody={["id", "compradorEmail", "somaPreco", "pedidoStatus"]}
+                                lastPage={pedidos?.totalPaginas}
+                                objeto={pedidos?.dados}
+                                posicionamentoAtributos={["center", "center", "center", "center"]}
+                                bgCor={[false, false, false, true]}
+                                botoesTabela={[
+                                    { label: "Verificar", onClick: (item) => navigate("/admin/pedidos/verificar/" + item.id) }
+                                ]}
+                                setOrdenacao={[]}
+                                setPagina={setPagina}
+                                setRegistroQuantia={SetRegistrosQuantia}
+                            />
+                        </div>
                     </div>
                 ) : (
                     <div className="flex justify-center items-center min-h-[300px]">
@@ -106,11 +108,13 @@ export function ListagemPedidos() {
                             <div className="text-3xl text-yellow-500 animate-bounce">
                                 <i className="fas fa-search"></i>
                             </div>
-                            <p className="text-sm text-gray-500 mt-2">Por favor, verifique seu filtro ou tente novamente mais tarde.</p>
+                            <p className="text-sm text-gray-500 mt-2">
+                                Nenhum pedido foi encontrado até o momento. Por favor, tente novamente mais tarde.
+                            </p>
                         </div>
                     </div>
                 )}
-            </div>
+            </Fragment>
         </LayoutAdmin>
     )
 }

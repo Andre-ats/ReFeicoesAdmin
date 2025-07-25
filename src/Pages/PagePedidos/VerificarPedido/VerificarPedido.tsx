@@ -3,6 +3,7 @@ import { LayoutAdmin } from "../../../Components/Layout/LayoutAdmin";
 import { useEffect, useState } from "react";
 import { GetPedidoById, IGetPedidoById } from "../../../Api/Pedidos/GetPedidoById";
 import { Tabela } from "../../../Components/Tabela/Tabela";
+import { PutStatusPedido } from "../../../Api/Pedidos/PutStatusPedido";
 
 export function VerificarPedido() {
     const { id } = useParams();
@@ -20,6 +21,11 @@ export function VerificarPedido() {
 
         fetchItem();
     }, [id]);
+
+    async function handleMudarStatusPedido(status: string){
+        await PutStatusPedido(dados?.id, status)
+        window.location.reload()
+    }
 
     if (!dados) {
         return <div className="text-center mt-10 text-gray-600">Carregando pedido...</div>;
@@ -113,10 +119,21 @@ export function VerificarPedido() {
                     atributosBody={["cep", "logradouro", "numero", "bairro", "cidade", "complemento"]}
                     lastPage={1}
                     objeto={[dados.endereco]}
-                    posicionamentoAtributos={["left", "left", "left", "left", "left", "left", ]}
+                    posicionamentoAtributos={["left", "left", "left", "left", "left", "left",]}
                     bgCor={[false, false]}
                     botoesTabela={[]}
                 />
+                <div className="w-1/2 mb-6 pr-4 flex gap-5 mt-10">
+                    <button onClick={()=>handleMudarStatusPedido("Entregue")} className="bg-green-500 text-white py-2 px-4 rounded-md whitespace-nowrap w-full">
+                        Status Entregue
+                    </button>
+                    <button onClick={()=>handleMudarStatusPedido("Pendente")} className="bg-gray-400 text-black py-2 px-4 rounded-md whitespace-nowrap w-full">
+                        Status Pendente
+                    </button>
+                    <button onClick={()=>handleMudarStatusPedido("Cancelado")} className="bg-red-500 text-white py-2 px-4 rounded-md whitespace-nowrap w-full">
+                        Status Cancelado
+                    </button>
+                </div>
             </div>
         </LayoutAdmin>
     );

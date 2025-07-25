@@ -80,42 +80,48 @@ export function ListagemItens() {
                 infoPagina
                 infoPaginaTexto="Listagem de todos os itens que o sistema possui."
             >
-                <div className="mt-8 w-full">
-                    <div className="w-full mb-6 pr-4">
-                        <button onClick={() => navigate("/admin/itens/criarItem")} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap">
-                            + Criar item
-                        </button>
-                    </div>
-                    <div className="flex">
-                        <div className="w-full">
-                            <FormularioComponent
-                                dadosState={filtroDados}
-                                label={["Nome", "Categoria", "Preço Min", "Preço Max", "Status"]}
-                                required={[false, false, false]}
-                                setDadosState={setFiltrosDados}
-                                typeInput={["text", "Enum", "number", "number", "Enum"]}
-                                Enum={[null, enumToArray(Categoria), null, null, enumToArray(Status)]}
-                                QuantiaElementoLinha={5}
-                            />
-                        </div>
-                    </div>
+                <Fragment>
+
                     {itens?.itens.length > 0 ? (
-                        <div>
-                            <Tabela
-                                headerAtributos={["Nome", "Categoria", "Preço", "Status"]}
-                                atributosBody={["Nome", "Categoria", "Preco", "Status"]}
-                                lastPage={itens?.totalPaginas}
-                                objeto={itens?.itens}
-                                posicionamentoAtributos={["center", "center", "center", "center"]}
-                                bgCor={[false, false, false, true]}
-                                botoesTabela={[
-                                    { label: "Ativar / Desativar", onClick: (item) => AtivarDesativarItem(item) },
-                                    { label: "Verificar", onClick: (item) => navigate("/admin/itens/verificar/" + item.Id) }
-                                ]}
-                                setOrdenacao={[]}
-                                setPagina={setPagina}
-                                setRegistroQuantia={SetRegistrosQuantia}
-                            />
+                        <div className="mt-8 w-full">
+                            <div className="w-full mb-6 pr-4">
+                                <button onClick={() => navigate("/admin/itens/criarItem")} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap">
+                                    + Criar item
+                                </button>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                    <div className="w-full">
+                                        <FormularioComponent
+                                            dadosState={filtroDados}
+                                            label={["Nome", "Categoria", "Preço Min", "Preço Max", "Status"]}
+                                            required={[false, false, false]}
+                                            setDadosState={setFiltrosDados}
+                                            typeInput={["text", "Enum", "number", "number", "Enum"]}
+                                            Enum={[null, enumToArray(Categoria), null, null, enumToArray(Status)]}
+                                            QuantiaElementoLinha={5}
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <Tabela
+                                        headerAtributos={["Nome", "Categoria", "Preço", "Status"]}
+                                        atributosBody={["Nome", "Categoria", "Preco", "Status"]}
+                                        lastPage={itens?.totalPaginas}
+                                        objeto={itens?.itens}
+                                        posicionamentoAtributos={["center", "center", "center", "center"]}
+                                        bgCor={[false, false, false, true]}
+                                        botoesTabela={[
+                                            { label: "Ativar / Desativar", onClick: (item) => AtivarDesativarItem(item) },
+                                            { label: "Verificar", onClick: (item) => navigate("/admin/itens/verificar/" + item.Id) }
+                                        ]}
+                                        setOrdenacao={[]}
+                                        setPagina={setPagina}
+                                        setRegistroQuantia={SetRegistrosQuantia}
+                                    />
+                                </div>
+                            </div>
+
                         </div>
                     ) :
                         <div className="flex justify-center items-center min-h-[300px]">
@@ -124,11 +130,19 @@ export function ListagemItens() {
                                 <div className="text-3xl text-yellow-500 animate-bounce">
                                     <i className="fas fa-search"></i>
                                 </div>
-                                <p className="text-sm text-gray-500 mt-2">Por favor, verifique seu filtro ou tente novamente mais tarde.</p>
+                                <div className="w-full mb-6 pr-4">
+
+                                    <p className="text-sm text-gray-500 mt-2">
+                                        Nenhum item foi encontrado. Por favor, cadastre um novo item ou tente novamente mais tarde.
+                                    </p>
+                                    <button onClick={() => navigate("/admin/itens/criarItem")} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap mt-5">
+                                        + Criar item
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     }
-                </div>
+                </Fragment>
             </LayoutAdmin>
         </Fragment >
     )
