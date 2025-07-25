@@ -10,6 +10,7 @@ export interface IGetTodosPedidosTabela {
         compradorNome: string;
         compradorEmail: string;
         pagamentoStatus: string;
+        pedidoStatus: string;
         somaPreco: number;
     }
 }
@@ -36,16 +37,13 @@ export async function GetTodosPedidosTabela(parametro?: string) {
             totalPaginas: data.totalPaginas,
             totalRegistros: data.totalRegistros,
             dados: data.dados.map((pedido: any) => {
-                const somaPreco = pedido.itens.reduce((total: number, item: any) => {
-                    return total + (item.preco * item.quantidade.quantidade);
-                }, 0);
-
                 return {
                     id: pedido.id,
                     compradorNome: pedido.compradorNome,
                     compradorEmail: pedido.compradorEmail,
+                    pedidoStatus: pedido.statusPedido,
                     pagamentoStatus: pedido.pagamento.status,
-                    somaPreco: "R$ " + somaPreco.toFixed(2)
+                    somaPreco: "R$ " + pedido.pagamento.valor
                 };
             })
         };

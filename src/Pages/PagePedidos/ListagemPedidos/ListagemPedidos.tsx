@@ -5,6 +5,12 @@ import { FormularioComponent } from "../../../Components/Formulario/Formulario";
 import { useNavigate } from "react-router-dom";
 import { GetTodosPedidosTabela } from "../../../Api/Pedidos/GetTodosPedidosTabela";
 
+enum StatusPedido {
+    Entregue = "Entregue", 
+    Pendente = "Pendente", 
+    Cancelado = "Cancelado"
+}
+
 export function ListagemPedidos() {
 
     const navigate = useNavigate()
@@ -13,6 +19,7 @@ export function ListagemPedidos() {
 
     const [registrosQuantia, SetRegistrosQuantia] = useState()
     const [pagina, setPagina] = useState<number>()
+    const enumToArray = (e: any) => Object.values(e);
 
     useEffect(() => {
         const fetchItens = async () => {
@@ -29,11 +36,9 @@ export function ListagemPedidos() {
     useEffect(() => {
             let parametro = `?${pagina ? "numeroDaPagina=" + pagina : ""}
             ${registrosQuantia ? "&numeroRegistros=" + registrosQuantia : ""}
-            ${filtroDados[0] ? "&Nome=" + filtroDados[0] : ""}
-            ${filtroDados[1] ? "&Categoria=" + filtroDados[1] : ""}
-            ${filtroDados[2] ? "&PrecoMin=" + filtroDados[2] : ""}
-            ${filtroDados[3] ? "&PrecoMax=" + filtroDados[3] : ""}
-            ${filtroDados[4] ? "&Status=" + (filtroDados[4] === "Ativo" ? true : false) : ""}`
+            ${filtroDados[0] ? "&PedidoId=" + filtroDados[0] : ""}
+            ${filtroDados[1] ? "&Email=" + filtroDados[1] : ""}
+            ${filtroDados[2] ? "&StatusPedido=" + filtroDados[2] : ""}`
                 .replace(/\?&/, "?")
                 .replace(/\s+/g, "");
     
@@ -64,19 +69,15 @@ export function ListagemPedidos() {
             infoPaginaTexto="Listagem de todos os pedidos que o sistema possui."
         >
             <div className="mt-8 w-full">
-                <div className="w-full mb-6 pr-4">
-                    <button onClick={() => navigate("/admin/itens/criarItem")} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap">
-                        + Criar item
-                    </button>
-                </div>
                 <div className="flex">
                     <div className="w-full">
                         <FormularioComponent
                             dadosState={filtroDados}
-                            label={["Pedido ID", "Email Usuario", "Status"]}
+                            label={["Pedido ID", "Email Usuario", "Status Pedido"]}
                             required={[false, false, false]}
                             setDadosState={setFiltrosDados}
                             typeInput={["text", "email", "Enum"]}
+                            Enum={[false, false, enumToArray(StatusPedido)]}
                             QuantiaElementoLinha={3}
                         />
                     </div>
@@ -84,15 +85,14 @@ export function ListagemPedidos() {
                 {pedidos?.dados ? (
                     <div>
                         <Tabela
-                            headerAtributos={["Pedido ID", "Usuario Email", "Preco", "Pagamento Status"]}
-                            atributosBody={["id", "compradorEmail", "somaPreco","pagamentoStatus"]}
+                            headerAtributos={["Pedido ID", "Usuario Email", "Valor Pago", "Pedido Status"]}
+                            atributosBody={["id", "compradorEmail", "somaPreco", "pedidoStatus"]}
                             lastPage={pedidos?.totalPaginas}
                             objeto={pedidos?.dados}
                             posicionamentoAtributos={["center", "center", "center", "center"]}
                             bgCor={[false, false, false, true]}
                             botoesTabela={[
-                                //{ label: "Ativar / Desativar", onClick: (item) => AtivarDesativarItem(item) },
-                                //{ label: "Verificar", onClick: (item) => navigate("/admin/itens/verificar/" + item.Id) }
+                                { label: "Verificar", onClick: (item) => navigate("/admin/pedidos/verificar/" + item.id) }
                             ]}
                             setOrdenacao={[]}
                             setPagina={setPagina}

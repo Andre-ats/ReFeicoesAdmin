@@ -6,6 +6,7 @@ import { ListagemItens } from './Pages/PageItens/ListagemItens/ListagemItens';
 import { CriarItem } from './Pages/PageItens/CriarItem/CriarItem';
 import { VerificarItens } from './Pages/PageItens/VerificarItens/VerificarItens';
 import { ListagemPedidos } from './Pages/PagePedidos/ListagemPedidos/ListagemPedidos';
+import { VerificarPedido } from './Pages/PagePedidos/VerificarPedido/VerificarPedido';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/admin/itens/criarItem" element={<CriarItem />} />
           <Route path="/admin/itens/verificar/:id" element={<VerificarItens />} />
 
+          <Route path="/admin/pedidos/verificar/:id" element={<VerificarPedido />} />
           <Route path="/admin/pedidos/listagem" element={<ListagemPedidos />} />
         </Routes>
       </Fragment>

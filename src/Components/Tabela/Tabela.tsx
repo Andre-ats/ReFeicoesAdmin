@@ -7,12 +7,12 @@ interface ITabela {
     objeto: any;
     atributosBody: string[];
     posicionamentoAtributos: ("left" | "center" | "right")[];
-    setOrdenacao: any;
-    setPagina: any;
-    lastPage: number | undefined;
+    setOrdenacao?: any;
+    setPagina?: any;
+    lastPage?: number | undefined;
     bgCor: boolean[];
     botoesTabela: { label: string, onClick: (item: any) => void }[];
-    setRegistroQuantia: any; // Adicionando função para atualizar a quantidade de registros
+    setRegistroQuantia?: any; // Adicionando função para atualizar a quantidade de registros
 }
 
 export function Tabela(props: ITabela) {
@@ -20,7 +20,8 @@ export function Tabela(props: ITabela) {
     const [quantiaPorPagina, setQuantiaPorPagina] = useState<number>(10); // Estado para controlar a quantidade por página
 
     useEffect(() => {
-        props.setPagina(pagina + 1);
+        if (props.setPagina)
+            props.setPagina(pagina + 1);
     }, [pagina]);
 
     const handlePageChange = (selected: { selected: number }) => {
@@ -65,8 +66,12 @@ export function Tabela(props: ITabela) {
                                         className="py-3 px-4 text-sm font-medium text-gray-600"
                                     >
                                         {props.bgCor[colIndex] === true ? (
-                                            item.Status === "Ativo" || item.pagamentoStatus === "Aprovado" ? (
+                                            item.Status === "Ativo" || item.pedidoStatus === "Entregue" ? (
                                                 <div className="bg-green-500 py-2 px-4 rounded-md text-white">
+                                                    {item[atributo]}
+                                                </div>
+                                            ) : item.Status === "Pendente" || item.pedidoStatus === "Pendente" ? (
+                                                <div className="bg-gray-300 py-2 px-4 rounded-md text-gray-800">
                                                     {item[atributo]}
                                                 </div>
                                             ) : (
@@ -101,34 +106,38 @@ export function Tabela(props: ITabela) {
                     </tbody>
                 </table>
                 <div className="mb-4 flex items-center justify-between">
-                    <ReactPaginate
-                        pageCount={props.lastPage!}
-                        pageRangeDisplayed={2}
-                        marginPagesDisplayed={2}
-                        onPageChange={handlePageChange}
-                        containerClassName="flex justify-start items-center space-x-2 py-4"
-                        activeClassName="bg-yellow-500 text-black shadow-md"
-                        previousClassName="px-4 py-2 rounded-md border border-gray-300 text-black bg-white hover:bg-yellow-500 transition-colors duration-200"
-                        nextClassName="px-4 py-2 rounded-md border border-gray-300 text-black bg-white hover:bg-yellow-500 transition-colors duration-200"
-                        pageClassName="px-4 py-2 rounded-md border border-gray-300 text-black bg-white hover:bg-yellow-500 transition-colors duration-200"
-                        breakClassName="px-4 py-2 rounded-md border border-gray-300 text-black bg-white"
-                        previousLabel="&laquo;"
-                        nextLabel="&raquo;"
-                    />
-                    <div className="flex items-center space-x-2">
-                        <label htmlFor="quantia" className="text-sm">Quantidade Registros:</label>
-                        <select
-                            id="quantia"
-                            className="p-2 border border-gray-300 rounded-md"
-                            value={quantiaPorPagina}
-                            onChange={handleQuantiaChange}
-                        >
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                    </div>
+                    {props.setPagina &&
+                        <ReactPaginate
+                            pageCount={props.lastPage!}
+                            pageRangeDisplayed={2}
+                            marginPagesDisplayed={2}
+                            onPageChange={handlePageChange}
+                            containerClassName="flex justify-start items-center space-x-2 py-4"
+                            activeClassName="bg-yellow-500 text-black shadow-md"
+                            previousClassName="px-4 py-2 rounded-md border border-gray-300 text-black bg-white hover:bg-yellow-500 transition-colors duration-200"
+                            nextClassName="px-4 py-2 rounded-md border border-gray-300 text-black bg-white hover:bg-yellow-500 transition-colors duration-200"
+                            pageClassName="px-4 py-2 rounded-md border border-gray-300 text-black bg-white hover:bg-yellow-500 transition-colors duration-200"
+                            breakClassName="px-4 py-2 rounded-md border border-gray-300 text-black bg-white"
+                            previousLabel="&laquo;"
+                            nextLabel="&raquo;"
+                        />
+                    }
+                    {props.setRegistroQuantia &&
+                        <div className="flex items-center space-x-2">
+                            <label htmlFor="quantia" className="text-sm">Quantidade Registros:</label>
+                            <select
+                                id="quantia"
+                                className="p-2 border border-gray-300 rounded-md"
+                                value={quantiaPorPagina}
+                                onChange={handleQuantiaChange}
+                            >
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    }
                 </div>
             </div>
         </Fragment>
