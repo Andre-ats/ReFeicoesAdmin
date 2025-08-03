@@ -7,6 +7,7 @@ import { UpdateAtivarDesativar } from "../../../Api/Itens/UpdateAtivarDesativar"
 import { useNavigate } from "react-router-dom";
 import { FormularioComponent } from "../../../Components/Formulario/Formulario";
 import { Categoria } from "../../../Api/Itens/Enums/EnumCategoria";
+import { Loader2 } from "lucide-react";
 
 enum Status {
     Ativo = "Ativo",
@@ -134,9 +135,15 @@ export function ListagemItens() {
                                     <p className="text-sm text-gray-500 mt-2">
                                         Nenhum item foi encontrado. Por favor, cadastre um novo item ou tente novamente mais tarde.
                                     </p>
-                                    <button onClick={() => navigate("/admin/itens/criarItem")} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap mt-5">
-                                        + Criar item
-                                    </button>
+                                    <div className="flex justify-center gap-4">
+                                        <button onClick={() => navigate("/admin/itens/criarItem")} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap mt-5">
+                                            + Criar item
+                                        </button>
+                                        <button onClick={()=>window.location.reload()} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap mt-5 flex gap-3">
+                                            <Loader2/>
+                                            Recarregar Pagina
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

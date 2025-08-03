@@ -4,6 +4,7 @@ import { Tabela } from "../../../Components/Tabela/Tabela";
 import { FormularioComponent } from "../../../Components/Formulario/Formulario";
 import { useNavigate } from "react-router-dom";
 import { GetTodosPedidosTabela } from "../../../Api/Pedidos/GetTodosPedidosTabela";
+import { Loader2 } from "lucide-react";
 
 enum StatusPedido {
     Entregue = "Entregue",
@@ -112,6 +113,12 @@ export function ListagemPedidos() {
                             </div>
                             <p className="text-sm text-gray-500 mt-2">
                                 Nenhum pedido foi encontrado até o momento. Por favor, tente novamente mais tarde.
+                                <div className="flex justify-center">
+                                    <button onClick={() => window.location.reload()} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap mt-5 flex gap-3">
+                                        <Loader2 />
+                                        Recarregar Pagina
+                                    </button>
+                                </div>
                             </p>
                         </div>
                     </div>

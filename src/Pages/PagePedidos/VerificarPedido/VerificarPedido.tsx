@@ -126,7 +126,7 @@ export function VerificarPedido() {
                     <button onClick={()=>handleMudarStatusPedido("Entregue")} className="bg-green-500 text-white py-2 px-4 rounded-md whitespace-nowrap w-full">
                         Status Entregue
                     </button>
-                    <button onClick={()=>handleMudarStatusPedido("Pendente")} className="bg-gray-400 text-black py-2 px-4 rounded-md whitespace-nowrap w-full">
+                    <button onClick={()=>handleMudarStatusPedido("Pendente")} className="bg-gray-400 text-white py-2 px-4 rounded-md whitespace-nowrap w-full">
                         Status Pendente
                     </button>
                     <button onClick={()=>handleMudarStatusPedido("Cancelado")} className="bg-red-500 text-white py-2 px-4 rounded-md whitespace-nowrap w-full">
