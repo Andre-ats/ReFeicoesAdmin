@@ -42,12 +42,11 @@ export async function GetTodosPedidosTabela(parametro?: string) {
                     compradorNome: pedido.compradorNome,
                     compradorEmail: pedido.compradorEmail,
                     pedidoStatus: pedido.statusPedido,
-                    pagamentoStatus: pedido.pagamento.status,
-                    somaPreco: "R$ " + pedido.pagamento.valor
+                    pagamentoStatus: pedido?.pagamento?.status,
+                    somaPreco: "R$ " + pedido?.pagamento?.valor
                 };
             })
         };
-
 
         return objPedido;
 

@@ -25,6 +25,7 @@ export function ListagemPedidos() {
         const fetchItens = async () => {
             try {
                 const data = await GetTodosPedidosTabela();
+                console.log(data)
                 setPedidos(data);
             } catch (error) {
                 console.error("Erro ao buscar os pedidos:", error);
@@ -61,6 +62,8 @@ export function ListagemPedidos() {
         }
     }, [registrosQuantia, filtroDados]);
 
+    console.log(pedidos)
+
     return (
         <LayoutAdmin
             header
@@ -69,7 +72,7 @@ export function ListagemPedidos() {
             infoPaginaTexto="Listagem de todos os pedidos que o sistema possui."
         >
             <Fragment>
-                {pedidos?.dados > 0 ? (
+                {pedidos?.dados?.length > 0 ? (
                     <div className="mt-8 w-full">
                         <div className="flex">
                             <div className="w-full">
