@@ -1,0 +1,1 @@
+export const ServicoImagemURL = "https://res.cloudinary.com/dfaxofgtj/image/upload/v1752735913/"
