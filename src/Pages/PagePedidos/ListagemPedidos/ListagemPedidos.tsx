@@ -67,7 +67,6 @@ export function ListagemPedidos() {
     return (
         <LayoutAdmin
             header
-            atalhosHeader={["Dashboard", "Itens", "Pedidos"]}
             infoPagina
             infoPaginaTexto="Listagem de todos os pedidos que o sistema possui."
         >

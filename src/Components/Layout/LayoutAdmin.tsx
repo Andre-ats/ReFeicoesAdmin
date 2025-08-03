@@ -6,7 +6,6 @@ import logoRefeicoes from "../../Imagens/Logo/LogoRefeicoes.png"
 
 interface ILayoutAdmin {
     header?: boolean
-    atalhosHeader?: string[]
     children?: ReactNode
     infoPagina?: boolean
     infoPaginaTexto?: string
@@ -18,6 +17,9 @@ export function LayoutAdmin(props: ILayoutAdmin) {
 
     const [mostrarIcon, setMostrarIcon] = useState(true)
     const [animacaoClasse, setAnimacaoClasse] = useState('');
+
+    const [linkHeader,] = useState(["/admin/dashboard", "/admin/itens/listagem", "/admin/pedidos/listagem"])
+    const [header,] = useState(["Dashboard", "Itens", "Pedidos"])
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -40,11 +42,11 @@ export function LayoutAdmin(props: ILayoutAdmin) {
                                 <img onClick={() => navigate("/admin/dashboard")} className="w-[70px] cursor-pointer" src={logoRefeicoes} alt="Logo" />
                             </div>
                             <div className="text-white">
-                                {props.atalhosHeader?.length! > 0 && (
+                                {props.header && (
                                     <div className="flex gap-6">
-                                        {props.atalhosHeader?.map((item, index) => (
+                                        {header?.map((item, index) => (
                                             <div key={index} className="cursor-pointer">
-                                                <p onClick={() => navigate("/admin/" + item.toLowerCase() + "/listagem")}>{item}</p>
+                                                <p onClick={() => navigate(linkHeader[index])}>{item}</p>
                                             </div>
                                         ))}
                                     </div>

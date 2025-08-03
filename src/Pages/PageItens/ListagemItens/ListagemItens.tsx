@@ -76,7 +76,6 @@ export function ListagemItens() {
         <Fragment>
             <LayoutAdmin
                 header
-                atalhosHeader={["Dashboard", "Itens", "Pedidos"]}
                 infoPagina
                 infoPaginaTexto="Listagem de todos os itens que o sistema possui."
             >

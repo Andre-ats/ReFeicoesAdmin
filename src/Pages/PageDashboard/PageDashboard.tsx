@@ -40,7 +40,6 @@ export function PageDashboard() {
         <Fragment>
             <LayoutAdmin
                 header
-                atalhosHeader={["Dashboard", "Itens", "Pedidos"]}
                 infoPagina
                 infoPaginaTexto="Este dashboard mostra o total de usuários registrados, pagamentos aprovados e o montante gerado."
             >

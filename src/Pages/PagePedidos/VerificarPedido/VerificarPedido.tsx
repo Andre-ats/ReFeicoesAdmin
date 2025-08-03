@@ -59,7 +59,6 @@ export function VerificarPedido() {
 
     return (
         <LayoutAdmin
-            atalhosHeader={["Dashboard", "Itens", "Pedidos"]}
             header
             infoPagina
             infoPaginaTexto="Veja todas as informações detalhadas sobre um pedido específico."
