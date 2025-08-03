@@ -9,7 +9,7 @@ interface ICardInfos {
 export function CardInfos(props: ICardInfos) {
     return (
         <Fragment>
-            <div className="w-full grid grid-cols-4 gap-4 py-4">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-4">
                 {props.dados ? (
                     Object.entries(props.dados).map(([key, value], index) => (
                         <div key={key} className="w-full p-10 bg-white text-black rounded-lg shadow-lg flex flex-col items-center">

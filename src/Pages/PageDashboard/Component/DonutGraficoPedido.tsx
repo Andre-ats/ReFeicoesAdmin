@@ -50,7 +50,7 @@ const DonutChart = ({ x, y, textoX, textoY }: { x: any; y: any, textoX: string, 
     };
 
     return (
-        <div className="w-full bg-white rounded-lg shadow-lg">
+        <div className="w-full bg-white rounded-lg shadow-lg mb-4">
             <div className='max-w-[300px] mx-auto bg-white p-4'>
                 <h2 className="text-lg font-semibold text-center mb-4 text-gray-800">Status dos Pedidos</h2>
                 <div className="flex justify-center items-center">

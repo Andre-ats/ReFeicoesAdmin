@@ -60,7 +60,7 @@ export function PageDashboard() {
                             ]}
                         />
                     </div>
-                    <div className="w-full flex justify-center gap-4">
+                    <div className="w-full md:flex justify-center gap-4">
                         <DonutChart
                             y={dashboardInfo?.quantidadePedidoPendente}
                             x={dashboardInfo?.quantidadePedidoEntregue}
