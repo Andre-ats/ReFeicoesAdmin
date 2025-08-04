@@ -81,28 +81,28 @@ export function ListagemItens() {
                 infoPaginaTexto="Listagem de todos os itens que o sistema possui."
             >
                 <Fragment>
-
-                    {itens?.itens.length > 0 ? (
-                        <div className="mt-8 w-full">
-                            <div className="w-full mb-6 pr-4">
-                                <button onClick={() => navigate("/admin/itens/criarItem")} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap">
-                                    + Criar item
-                                </button>
+                    <div className="mt-8 w-full">
+                        <div className="w-full mb-6 pr-4">
+                            <button onClick={() => navigate("/admin/itens/criarItem")} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap">
+                                + Criar item
+                            </button>
+                        </div>
+                        <div className="flex">
+                            <div className="w-full">
+                                <FormularioComponent
+                                    dadosState={filtroDados}
+                                    label={["Nome", "Categoria", "Preço Min", "Preço Max", "Status"]}
+                                    required={[false, false, false]}
+                                    setDadosState={setFiltrosDados}
+                                    typeInput={["text", "Enum", "number", "number", "Enum"]}
+                                    Enum={[null, enumToArray(Categoria), null, null, enumToArray(Status)]}
+                                    QuantiaElementoLinha={"gap-2 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5"}
+                                />
                             </div>
+                        </div>
+
+                        {itens?.itens.length > 0 ? (
                             <div>
-                                <div className="flex">
-                                    <div className="w-full">
-                                        <FormularioComponent
-                                            dadosState={filtroDados}
-                                            label={["Nome", "Categoria", "Preço Min", "Preço Max", "Status"]}
-                                            required={[false, false, false]}
-                                            setDadosState={setFiltrosDados}
-                                            typeInput={["text", "Enum", "number", "number", "Enum"]}
-                                            Enum={[null, enumToArray(Categoria), null, null, enumToArray(Status)]}
-                                            QuantiaElementoLinha={"gap-2 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5"}
-                                        />
-                                    </div>
-                                </div>
                                 <div>
                                     <Tabela
                                         headerAtributos={["Nome", "Categoria", "Preço", "Status"]}
@@ -120,34 +120,36 @@ export function ListagemItens() {
                                         setRegistroQuantia={SetRegistrosQuantia}
                                     />
                                 </div>
+
                             </div>
+                        ) :
+                            <div className="flex justify-center items-center min-h-[300px]">
+                                <div className="text-center animate__animated animate__fadeIn animate__delay-1s">
+                                    <p className="text-xl font-semibold text-gray-600 mb-4">Nenhum item encontrado</p>
+                                    <div className="text-3xl text-yellow-500 animate-bounce">
+                                        <i className="fas fa-search"></i>
+                                    </div>
+                                    <div className="w-full mb-6 pr-4">
 
-                        </div>
-                    ) :
-                        <div className="flex justify-center items-center min-h-[300px]">
-                            <div className="text-center animate__animated animate__fadeIn animate__delay-1s">
-                                <p className="text-xl font-semibold text-gray-600 mb-4">Nenhum item encontrado</p>
-                                <div className="text-3xl text-yellow-500 animate-bounce">
-                                    <i className="fas fa-search"></i>
-                                </div>
-                                <div className="w-full mb-6 pr-4">
-
-                                    <p className="text-sm text-gray-500 mt-2">
-                                        Nenhum item foi encontrado. Por favor, cadastre um novo item ou tente novamente mais tarde.
-                                    </p>
-                                    <div className="flex justify-center gap-4">
-                                        <button onClick={() => navigate("/admin/itens/criarItem")} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap mt-5">
-                                            + Criar item
-                                        </button>
-                                        <button onClick={()=>window.location.reload()} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap mt-5 flex gap-3">
-                                            <Loader2/>
-                                            Recarregar Pagina
-                                        </button>
+                                        <p className="text-sm text-gray-500 mt-2">
+                                            Nenhum item foi encontrado. Por favor, cadastre um novo item ou tente novamente mais tarde.
+                                        </p>
+                                        <div className="md:flex justify-center gap-4">
+                                            <button onClick={() => navigate("/admin/itens/criarItem")} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap mt-5">
+                                                + Criar item
+                                            </button>
+                                            <div className="flex justify-center">
+                                                <button onClick={() => window.location.reload()} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap mt-5 flex gap-3">
+                                                    <Loader2 />
+                                                    Recarregar Pagina
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 </Fragment>
             </LayoutAdmin>
         </Fragment >

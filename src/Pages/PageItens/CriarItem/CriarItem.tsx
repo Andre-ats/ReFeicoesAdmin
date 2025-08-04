@@ -8,8 +8,11 @@ import { PostCriarItem } from "../../../Api/Itens/PostCriarItem";
 import { PostCriarImagem } from "../../../Api/Itens/PostCriarImagem";
 import { Spinner } from "../../../Components/Spinner/Spinner";
 import Modal from "../../../Components/Modal/Modal";
+import { useNavigate } from "react-router-dom";
 
 export function CriarItem() {
+
+    const navigate = useNavigate()
 
     const [passoatual, setPassoatual] = useState(0)
     const [itemDados, setItemDados] = useState()
@@ -46,6 +49,7 @@ export function CriarItem() {
             console.error(response.error);
         } else {
             console.log("Item criado com sucesso", response);
+            navigate("/admin/itens/listagem")
         }
     }
 
