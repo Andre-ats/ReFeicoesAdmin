@@ -99,7 +99,7 @@ export function ListagemItens() {
                                             setDadosState={setFiltrosDados}
                                             typeInput={["text", "Enum", "number", "number", "Enum"]}
                                             Enum={[null, enumToArray(Categoria), null, null, enumToArray(Status)]}
-                                            QuantiaElementoLinha={5}
+                                            QuantiaElementoLinha={"gap-2 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5"}
                                         />
                                     </div>
                                 </div>

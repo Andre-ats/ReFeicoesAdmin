@@ -83,7 +83,7 @@ export function ListagemPedidos() {
                                     setDadosState={setFiltrosDados}
                                     typeInput={["text", "email", "Enum"]}
                                     Enum={[false, false, enumToArray(StatusPedido)]}
-                                    QuantiaElementoLinha={3}
+                                    QuantiaElementoLinha={"gap-2 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}
                                 />
                             </div>
                         </div>

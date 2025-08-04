@@ -77,7 +77,7 @@ export function ComponentItem(props: IComponentItem) {
                             required={[true, true, true]}
                             typeInput={["text", "number", "Enum"]}
                             Enum={[null, null, enumToArray(Categoria)]}
-                            QuantiaElementoLinha={1}
+                            QuantiaElementoLinha={"gap-2 w-full grid grid-cols-1"}
                         />
                         <div className="w-full">
                             <label htmlFor="" className="block text-black text-sm font-medium mb-1">Descrição</label>

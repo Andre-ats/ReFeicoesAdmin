@@ -7,7 +7,7 @@ interface InputForms {
   setDadosState: (v: string[]) => void;
 
   /* aparência / validação */
-  QuantiaElementoLinha?: number;
+  QuantiaElementoLinha?: any;
   typeInput: string[];                    // "text" | "email" | "password" | "Enum"…
   label: string[];
   required: boolean[];
@@ -59,14 +59,7 @@ export function FormularioComponent(props: InputForms) {
 
   /* ---------------------------------------------------------------- */
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: `repeat(${props.QuantiaElementoLinha ?? 2}, 1fr)`,
-        gap: "8px",
-        width: "100%"
-      }}
-    >
+    <div className={props.QuantiaElementoLinha}>
       {props.label.map((lab, idx) => {
         const value = getValue?.[idx] ?? "";
         const isEmpty = value === "";
