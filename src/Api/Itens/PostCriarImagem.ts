@@ -15,7 +15,11 @@ export async function PostCriarImagem(id: string, imagem: File) {
         });
 
         if (!response.ok) {
-            throw new Error('Falha ao criar a imagem');
+            if (response.status === 401) {
+                window.location.href = "/login"
+                return
+            }
+            throw new Error("Erro na requisição");
         }
 
         const responseData = await response.json();

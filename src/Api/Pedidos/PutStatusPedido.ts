@@ -16,7 +16,11 @@ export async function PutStatusPedido(idPedido: string | undefined, status: stri
         });
 
         if (!response.ok) {
-            throw new Error('Falha ao criar o item');
+            if (response.status === 401) {
+                window.location.href = "/login"
+                return
+            }
+            throw new Error("Erro na requisição");
         }
 
         const responseData = await response.json();
