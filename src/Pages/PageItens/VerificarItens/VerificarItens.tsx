@@ -14,7 +14,7 @@ export function VerificarItens() {
         const fetchItem = async () => {
             try {
                 const itemData = await GetItemById(id!);
-                setItem(itemData[0]);
+                setItem(itemData![0]);
             } catch (error) {
                 console.error("Erro ao carregar o item:", error);
             }
@@ -32,15 +32,15 @@ export function VerificarItens() {
             infoPaginaTexto="Veja todas as informações detalhadas sobre um item específico."
         >
             <div className="w-full mt-8">
-                <div className="flex">
-                    <div className="w-1/2">
+                <div className="2xl:flex">
+                    <div className="w-full 2xl:w-1/2 xl:mb-0 mb-8">
                         <img
                             className="rounded-lg shadow-xl border-2 border-amareloReFeicoes hover:scale-105 transition-transform duration-500 h-[300px] w-[500px] object-cover"
                             src={ServicoImagemURL + item?.UrlImagem}
                             alt="Imagem do serviço"
                         />
                     </div>
-                    <div className="w-3/4">
+                    <div className="2xl:w-3/4">
                         <div className="flex flex-col bg-white p-6 rounded-lg shadow-xl w-full space-y-6">
                             <div className="bg-amareloReFeicoes w-fit px-3 py-1 rounded-full font-medium">
                                 <p>{item?.Categoria}</p>
