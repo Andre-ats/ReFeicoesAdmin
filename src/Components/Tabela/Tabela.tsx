@@ -105,7 +105,7 @@ export function Tabela(props: ITabela) {
                         ))}
                     </tbody>
                 </table>
-                <div className="mb-4 flex items-center justify-between">
+                <div className="mb-4 md:flex items-center justify-between">
                     {props.setPagina &&
                         <ReactPaginate
                             pageCount={props.lastPage!}
