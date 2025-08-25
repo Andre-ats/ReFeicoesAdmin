@@ -33,7 +33,7 @@ export interface IGetPedidoById {
     };
 }
 
-export async function GetPedidoById(id: string): Promise<IGetPedidoById> {
+export async function GetPedidoById(id: string){
     try {
         const response = await fetch(`${API_URL}/Pedido/GetPedidoById?PedidoId=${id}`, {
             method: "GET",
@@ -44,6 +44,10 @@ export async function GetPedidoById(id: string): Promise<IGetPedidoById> {
         });
 
         if (!response.ok) {
+            if (response.status === 401) {
+                window.location.href = "/login"
+                return
+            }
             throw new Error("Erro na requisição");
         }
 

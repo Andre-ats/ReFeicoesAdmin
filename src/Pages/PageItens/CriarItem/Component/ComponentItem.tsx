@@ -68,8 +68,8 @@ export function ComponentItem(props: IComponentItem) {
     return (
         <Fragment>
             <div className="w-full">
-                <div className="flex h-full gap-4">
-                    <div className="w-1/2 h-full">
+                <div className="md:flex h-full gap-4">
+                    <div className="md:w-1/2 w-full h-full md:mb-0 mb-4">
                         <FormularioComponent
                             dadosState={itemDados}
                             setDadosState={setItemDados}
@@ -77,7 +77,7 @@ export function ComponentItem(props: IComponentItem) {
                             required={[true, true, true]}
                             typeInput={["text", "number", "Enum"]}
                             Enum={[null, null, enumToArray(Categoria)]}
-                            QuantiaElementoLinha={1}
+                            QuantiaElementoLinha={"gap-2 w-full grid grid-cols-1"}
                         />
                         <div className="w-full">
                             <label htmlFor="" className="block text-black text-sm font-medium mb-1">Descrição</label>
@@ -90,7 +90,7 @@ export function ComponentItem(props: IComponentItem) {
                         </div>
                     </div>
                     <div className="border-l border-gray-300 mx-4"></div>
-                    <div className="w-1/2 flex flex-col h-full">
+                    <div className="md:w-1/2 w-full flex flex-col h-full">
                         <ul className="space-y-2.5">
                             <div className="flex flex-col items-start text-gray-500 space-y-2">
                                 <label htmlFor="" className="block text-black text-sm font-medium">Ingredientes</label>

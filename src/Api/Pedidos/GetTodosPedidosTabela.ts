@@ -26,7 +26,11 @@ export async function GetTodosPedidosTabela(parametro?: string) {
         });
 
         if (!response.ok) {
-            throw new Error('Erro na requisição');
+            if (response.status === 401) {
+                window.location.href = "/login"
+                return
+            }
+            throw new Error("Erro na requisição");
         }
 
         const data = await response.json();

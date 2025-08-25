@@ -13,7 +13,7 @@ export function VerificarPedido() {
         const fetchItem = async () => {
             try {
                 const pedidoData = await GetPedidoById(id!);
-                setDados(pedidoData.pedidoByIdUsuariosCompradorDadosDto);
+                setDados(pedidoData!.pedidoByIdUsuariosCompradorDadosDto);
             } catch (error) {
                 console.error("Erro ao carregar o pedido:", error);
             }
@@ -122,11 +122,11 @@ export function VerificarPedido() {
                     bgCor={[false, false]}
                     botoesTabela={[]}
                 />
-                <div className="w-1/2 mb-6 pr-4 flex gap-5 mt-10">
-                    <button onClick={()=>handleMudarStatusPedido("Entregue")} className="bg-green-500 text-white py-2 px-4 rounded-md whitespace-nowrap w-full">
+                <div className="w-1/2 mb-6 pr-4 md:flex gap-5 mt-10">
+                    <button onClick={()=>handleMudarStatusPedido("Entregue")} className="bg-green-500 text-white py-2 px-4 rounded-md whitespace-nowrap w-full md:mb-0 mb-5">
                         Status Entregue
                     </button>
-                    <button onClick={()=>handleMudarStatusPedido("Pendente")} className="bg-gray-400 text-black py-2 px-4 rounded-md whitespace-nowrap w-full">
+                    <button onClick={()=>handleMudarStatusPedido("Pendente")} className="bg-gray-400 text-white py-2 px-4 rounded-md whitespace-nowrap w-full md:mb-0 mb-5">
                         Status Pendente
                     </button>
                     <button onClick={()=>handleMudarStatusPedido("Cancelado")} className="bg-red-500 text-white py-2 px-4 rounded-md whitespace-nowrap w-full">

@@ -4,6 +4,7 @@ import { Tabela } from "../../../Components/Tabela/Tabela";
 import { FormularioComponent } from "../../../Components/Formulario/Formulario";
 import { useNavigate } from "react-router-dom";
 import { GetTodosPedidosTabela } from "../../../Api/Pedidos/GetTodosPedidosTabela";
+import { Loader2 } from "lucide-react";
 
 enum StatusPedido {
     Entregue = "Entregue",
@@ -71,51 +72,59 @@ export function ListagemPedidos() {
             infoPaginaTexto="Listagem de todos os pedidos que o sistema possui."
         >
             <Fragment>
-                {pedidos?.dados?.length > 0 ? (
-                    <div className="mt-8 w-full">
-                        <div className="flex">
-                            <div className="w-full">
-                                <FormularioComponent
-                                    dadosState={filtroDados}
-                                    label={["Pedido ID", "Email Usuario", "Status Pedido"]}
-                                    required={[false, false, false]}
-                                    setDadosState={setFiltrosDados}
-                                    typeInput={["text", "email", "Enum"]}
-                                    Enum={[false, false, enumToArray(StatusPedido)]}
-                                    QuantiaElementoLinha={3}
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <Tabela
-                                headerAtributos={["Pedido ID", "Usuario Email", "Valor Pago", "Pedido Status"]}
-                                atributosBody={["id", "compradorEmail", "somaPreco", "pedidoStatus"]}
-                                lastPage={pedidos?.totalPaginas}
-                                objeto={pedidos?.dados}
-                                posicionamentoAtributos={["center", "center", "center", "center"]}
-                                bgCor={[false, false, false, true]}
-                                botoesTabela={[
-                                    { label: "Verificar", onClick: (item) => navigate("/admin/pedidos/verificar/" + item.id) }
-                                ]}
-                                setOrdenacao={[]}
-                                setPagina={setPagina}
-                                setRegistroQuantia={SetRegistrosQuantia}
+                <div className="mt-8 w-full">
+                    <div className="flex">
+                        <div className="w-full">
+                            <FormularioComponent
+                                dadosState={filtroDados}
+                                label={["Pedido ID", "Email Usuario", "Status Pedido"]}
+                                required={[false, false, false]}
+                                setDadosState={setFiltrosDados}
+                                typeInput={["text", "email", "Enum"]}
+                                Enum={[false, false, enumToArray(StatusPedido)]}
+                                QuantiaElementoLinha={"gap-2 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}
                             />
                         </div>
                     </div>
-                ) : (
-                    <div className="flex justify-center items-center min-h-[300px]">
-                        <div className="text-center animate__animated animate__fadeIn animate__delay-1s">
-                            <p className="text-xl font-semibold text-gray-600 mb-4">Nenhum pedido encontrado</p>
-                            <div className="text-3xl text-yellow-500 animate-bounce">
-                                <i className="fas fa-search"></i>
+                    {pedidos?.dados?.length > 0 ? (
+                        <div>
+                            <div>
+                                <Tabela
+                                    headerAtributos={["Pedido ID", "Usuario Email", "Valor Pago", "Pedido Status"]}
+                                    atributosBody={["id", "compradorEmail", "somaPreco", "pedidoStatus"]}
+                                    lastPage={pedidos?.totalPaginas}
+                                    objeto={pedidos?.dados}
+                                    posicionamentoAtributos={["center", "center", "center", "center"]}
+                                    bgCor={[false, false, false, true]}
+                                    botoesTabela={[
+                                        { label: "Verificar", onClick: (item) => navigate("/admin/pedidos/verificar/" + item.id) }
+                                    ]}
+                                    setOrdenacao={[]}
+                                    setPagina={setPagina}
+                                    setRegistroQuantia={SetRegistrosQuantia}
+                                />
                             </div>
-                            <p className="text-sm text-gray-500 mt-2">
-                                Nenhum pedido foi encontrado até o momento. Por favor, tente novamente mais tarde.
-                            </p>
                         </div>
-                    </div>
-                )}
+                    ) : (
+                        <div className="flex justify-center items-center min-h-[300px]">
+                            <div className="text-center animate__animated animate__fadeIn animate__delay-1s">
+                                <p className="text-xl font-semibold text-gray-600 mb-4">Nenhum pedido encontrado</p>
+                                <div className="text-3xl text-yellow-500 animate-bounce">
+                                    <i className="fas fa-search"></i>
+                                </div>
+                                <p className="text-sm text-gray-500 mt-2">
+                                    Nenhum pedido foi encontrado até o momento. Por favor, tente novamente mais tarde.
+                                    <div className="flex justify-center">
+                                        <button onClick={() => window.location.reload()} className="bg-amareloReFeicoes text-black py-2 px-12 rounded-md whitespace-nowrap mt-5 flex gap-3">
+                                            <Loader2 />
+                                            Recarregar Pagina
+                                        </button>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </Fragment>
         </LayoutAdmin>
     )

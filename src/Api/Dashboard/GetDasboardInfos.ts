@@ -11,26 +11,30 @@ export interface IDashboardInfo {
     receitaTotal: number;
 }
 
-export async function GetDashboardInfos(){
+export async function GetDashboardInfos() {
     try {
-            const response = await fetch(`${API_URL}/Admin/GetDashboardInfos`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            });
-    
-            if (!response.ok) {
-                throw new Error("Erro na requisição");
+        const response = await fetch(`${API_URL}/Admin/GetDashboardInfos`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+
+        if (!response.ok) {
+            if (response.status === 401) {
+                window.location.href = "/login"
+                return
             }
-    
-            const data: IDashboardInfo = await response.json();
-    
-            return data;
-    
-        } catch (error) {
-            console.error("Erro ao buscar os itens:", error);
-            throw error;
+            throw new Error("Erro na requisição");
         }
+
+        const data: IDashboardInfo = await response.json();
+
+        return data;
+
+    } catch (error) {
+        console.error("Erro ao buscar os itens:", error);
+        throw error;
+    }
 }

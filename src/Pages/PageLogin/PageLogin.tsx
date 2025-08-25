@@ -70,7 +70,7 @@ export function PageLogin() {
                                             label={["Email:", "Senha:"]}
                                             required={[true, true]}
                                             typeInput={["email", "password"]}
-                                            QuantiaElementoLinha={1}
+                                            QuantiaElementoLinha={"gap-2 w-full grid grid-cols-1"}
                                             placeholder={["exemplo@email.com", "Senha..."]}
                                             erro={erroBool}
                                             descricaoErro={erroMsg}
